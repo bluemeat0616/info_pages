@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIIT计时器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-top: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: #ffcc00;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .settings {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+        }
+        
+        .setting-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        input {
+            padding: 12px 15px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            width: 100%;
+        }
+        
+        input:focus {
+            outline: 2px solid #ffcc00;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .timer-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px 0;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .status {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .countdown {
+            font-size: 6rem;
+            font-weight: 800;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+        }
+        
+        .cycle-info {
+            font-size: 1.3rem;
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ffcc00, #ff6600);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 15px 35px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        #start-btn {
+            background: linear-gradient(to right, #00b09b, #96c93d);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 176, 155, 0.4);
+        }
+        
+        #start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 176, 155, 0.6);
+        }
+        
+        #start-btn:active {
+            transform: translateY(1px);
+        }
+        
+        #reset-btn {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+        
+        #reset-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+        
+        .sprint {
+            color: #ffcc00;
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
+        }
+        
+        .rest {
+            color: #00c9ff;
+            text-shadow: 0 0 15px rgba(0, 201, 255, 0.7);
+        }
+        
+        .completed {
+            color: #96c93d;
+            text-shadow: 0 0 15px rgba(150, 201, 61, 0.7);
+        }
+        
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .countdown {
+                font-size: 4.5rem;
+            }
+            
+            .status {
+                font-size: 2.5rem;
+            }
+            
+            .settings {
+                grid-template-columns: 1fr;
+            }
+            
+            button {
+                padding: 12px 25px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>HIIT 计时器</h1>
+            <p class="subtitle">高强度间歇训练助手</p>
+        </header>
+        
+        <div class="settings">
+            <div class="setting-group">
+                <label for="sprint-time">冲刺时间 (秒):</label>
+                <input type="number" id="sprint-time" min="1" max="300" value="25">
+            </div>
+            
+            <div class="setting-group">
+                <label for="rest-time">休息时间 (秒):</label>
+                <input type="number" id="rest-time" min="1" max="300" value="10">
+            </div>
+            
+            <div class="setting-group">
+                <label for="cycles">循环次数:</label>
+                <input type="number" id="cycles" min="1" max="50" value="10">
+            </div>
+        </div>
+        
+        <div class="timer-display">
+            <div class="status" id="status">准备开始</div>
+            <div class="countdown" id="countdown">--</div>
+            <div class="cycle-info" id="cycle-info">总循环: 10</div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button id="start-btn">开始训练</button>
+            <button id="reset-btn">重置</button>
+        </div>
+    </div>
+    
+    <footer>
+        HIIT计时器 | 设计用于高强度间歇训练 | 
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取DOM元素
+            const sprintTimeInput = document.getElementById('sprint-time');
+            const restTimeInput = document.getElementById('rest-time');
+            const cyclesInput = document.getElementById('cycles');
+            const startBtn = document.getElementById('start-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const statusEl = document.getElementById('status');
+            const countdownEl = document.getElementById('countdown');
+            const cycleInfoEl = document.getElementById('cycle-info');
+            const progressBar = document.getElementById('progress-bar');
+            
+            // 训练状态变量
+            let isRunning = false;
+            let timer;
+            let currentCycle = 1;
+            let totalCycles = parseInt(cyclesInput.value);
+            let isSprintPhase = true;
+            let currentTime;
+            let sprintTime = parseInt(sprintTimeInput.value);
+            let restTime = parseInt(restTimeInput.value);
+            
+            // 更新训练信息显示
+            function updateCycleInfo() {
+                cycleInfoEl.textContent = `循环: ${currentCycle}/${totalCycles}`;
+            }
+            
+            // 开始倒计时
+            function startTimer() {
+                if (isRunning) return;
+                
+                // 获取用户输入
+                sprintTime = parseInt(sprintTimeInput.value);
+                restTime = parseInt(restTimeInput.value);
+                totalCycles = parseInt(cyclesInput.value);
+                currentCycle = 1;
+                
+                // 禁用输入
+                sprintTimeInput.disabled = true;
+                restTimeInput.disabled = true;
+                cyclesInput.disabled = true;
+                
+                // 设置初始状态
+                isRunning = true;
+                isSprintPhase = true;
+                currentTime = sprintTime;
+                startBtn.textContent = '运行中...';
+                statusEl.textContent = '冲刺!';
+                statusEl.className = 'status sprint';
+                updateCycleInfo();
+                updateCountdown();
+                
+                // 开始计时
+                timer = setInterval(updateCountdown, 1000);
+            }
+            
+            // 更新倒计时
+            function updateCountdown() {
+                countdownEl.textContent = currentTime;
+                progressBar.style.width = `${calculateProgress()}%`;
+                
+                if (currentTime <= 0) {
+                    // 切换阶段
+                    if (isSprintPhase) {
+                        // 冲刺结束，进入休息
+                        isSprintPhase = false;
+                        currentTime = restTime;
+                        statusEl.textContent = '休息';
+                        statusEl.className = 'status rest';
+                    } else {
+                        // 休息结束，进入下一轮冲刺或结束
+                        currentCycle++;
+                        
+                        if (currentCycle > totalCycles) {
+                            // 训练结束
+                            clearInterval(timer);
+                            statusEl.textContent = '训练完成!';
+                            statusEl.className = 'status completed';
+                            countdownEl.textContent = '✓';
+                            startBtn.textContent = '开始训练';
+                            isRunning = false;
+                            
+                            // 启用输入
+                            sprintTimeInput.disabled = false;
+                            restTimeInput.disabled = false;
+                            cyclesInput.disabled = false;
+                            return;
+                        }
+                        
+                        isSprintPhase = true;
+                        currentTime = sprintTime;
+                        statusEl.textContent = '冲刺!';
+                        statusEl.className = 'status sprint';
+                        updateCycleInfo();
+                    }
+                }
+                
+                currentTime--;
+            }
+            
+            // 计算进度条百分比
+            function calculateProgress() {
+                if (isSprintPhase) {
+                    return 100 - (currentTime / sprintTime * 100);
+                } else {
+                    return 100 - (currentTime / restTime * 100);
+                }
+            }
+            
+            // 重置计时器
+            function resetTimer() {
+                clearInterval(timer);
+                isRunning = false;
+                currentCycle = 1;
+                totalCycles = parseInt(cyclesInput.value);
+                
+                statusEl.textContent = '准备开始';
+                statusEl.className = 'status';
+                countdownEl.textContent = '--';
+                cycleInfoEl.textContent = `总循环: ${totalCycles}`;
+                progressBar.style.width = '0%';
+                startBtn.textContent = '开始训练';
+                
+                // 启用输入
+                sprintTimeInput.disabled = false;
+                restTimeInput.disabled = false;
+                cyclesInput.disabled = false;
+            }
+            
+            // 事件监听
+            startBtn.addEventListener('click', startTimer);
+            resetBtn.addEventListener('click', resetTimer);
+            
+            // 初始化显示
+            updateCycleInfo();
+        });
+    </script>
+</body>
+</html>

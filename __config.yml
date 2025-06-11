@@ -1,0 +1,106 @@
+# Site settings
+title: "Info Pages"
+description: "个人信息页面集合 - HIIT计时器和AI素养课程"
+baseurl: "/info_pages"
+url: "https://bluemeat0616.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Layout settings for clean design
+show_excerpts: false
+breadcrumbs: false
+show_date: false
+show_author: false
+
+# GitHub Pages settings
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Navigation - simplified
+header_pages:
+  - readme.md
+  - fitness/readme.md
+  - study/ai_fluency/readme.md
+
+# Minima theme customization for clean layout
+minima:
+  skin: classic
+  social_links:
+    github: bluemeat0616
+
+# Collections
+collections:
+  fitness:
+    output: true
+    permalink: /:collection/:name/
+  study:
+    output: true
+    permalink: /:collection/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  - scope:
+      path: ""
+      type: "fitness"
+    values:
+      layout: "page"
+  - scope:
+      path: ""
+      type: "study"
+    values:
+      layout: "page"
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - .git/
+  - .gitignore
+
+# Include files
+include:
+  - _pages
+
+# Sass settings
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# SEO settings - minimal
+author: "bluemeat0616"
+social:
+  name: "目测打得过"
+  links:
+    - "https://github.com/bluemeat0616"
+
+# Clean layout settings
+show_sidebar: false
+show_footer: true
+compact_header: true
+
+# Analytics (optional)
+# google_analytics: UA-XXXXXXXX-X
+
+# Comments (optional)
+# disqus:
+#   shortname: your-disqus-shortname

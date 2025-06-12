@@ -16,7 +16,7 @@
     <style>
         :root {
             --primary-color: #2563eb;
-            --primary-dark: #1d4ed8;
+
             --secondary-color: #f1f5f9;
             --accent-color: #06b6d4;
             --text-primary: #1f2937;
@@ -25,23 +25,12 @@
             --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-primary: linear-gradient(135deg, #e0f2fe 0%, #f8fafc 100%);
             --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
         }
         
-        [data-theme="dark"] {
-            --primary-color: #3b82f6;
-            --primary-dark: #2563eb;
-            --secondary-color: #1f2937;
-            --accent-color: #06b6d4;
-            --text-primary: #f9fafb;
-            --text-secondary: #d1d5db;
-            --border-color: #374151;
-            --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-            --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-            --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
-        }
+
         
         * {
             margin: 0;
@@ -81,9 +70,7 @@
             transition: all 0.3s ease;
         }
         
-        [data-theme="dark"] .navbar {
-            background: rgba(31, 41, 55, 0.95);
-        }
+
         
         .nav-container {
             max-width: 1200px;
@@ -122,30 +109,12 @@
             background: rgba(37, 99, 235, 0.1);
         }
         
-        .theme-toggle {
-            background: none;
-            border: 2px solid var(--border-color);
-            color: var(--text-primary);
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-            transition: all 0.3s ease;
-        }
-        
-        .theme-toggle:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-        }
+
         
         .hero {
             background: var(--gradient-primary);
-            color: white;
+            color: var(--text-primary);
             padding: 5rem 0 4rem;
-            text-align: center;
             position: relative;
             overflow: hidden;
         }
@@ -167,33 +136,102 @@
             z-index: 1;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            min-height: 500px;
+        }
+        
+        .hero-text {
+            flex: 1;
+            text-align: left;
+        }
+        
+        .hero-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         .hero h1 {
             font-size: 3.5rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
-            background: linear-gradient(45deg, #ffffff, #e0e7ff);
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            white-space: nowrap;
         }
         
         .hero-subtitle {
             font-size: 1.25rem;
-            margin-bottom: 1rem;
-            opacity: 0.9;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
         
         .hero-image {
-            max-width: 400px;
-            margin: 0rem auto;
+            max-width: 100%;
+            height: auto;
             border-radius: 1rem;
             box-shadow: var(--shadow-large);
+        }
+        
+        .hero-features {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 2rem;
+            color: var(--primary-color);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            background: rgba(37, 99, 235, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .feature-item i {
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+            
+            .hero-text {
+                text-align: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-features {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+            
+            .feature-item {
+                justify-content: center;
+            }
         }
         
         .container {
@@ -236,9 +274,7 @@
             border: 1px solid var(--border-color);
         }
         
-        [data-theme="dark"] .framework-overview {
-            background: #374151;
-        }
+
         
         .framework-grid {
             display: grid;
@@ -258,9 +294,7 @@
             overflow: hidden;
         }
         
-        [data-theme="dark"] .framework-card {
-            background: #374151;
-        }
+
         
         .framework-card::before {
             content: '';
@@ -302,9 +336,7 @@
             margin-bottom: 1.5rem;
         }
         
-        [data-theme="dark"] .content-card {
-            background: #374151;
-        }
+
         
         .content-title {
             font-size: 2rem;
@@ -336,9 +368,7 @@
             transition: all 0.3s ease;
         }
         
-        [data-theme="dark"] .image-card {
-            background: #4b5563;
-        }
+
         
         .image-card:hover {
             transform: translateY(-2px);
@@ -409,10 +439,7 @@
             position: relative;
         }
         
-        [data-theme="dark"] .highlight-box {
-            background: linear-gradient(135deg, #451a03 0%, #78350f 100%);
-            border-color: #d97706;
-        }
+
         
         .highlight-box::before {
             content: '💡';
@@ -430,10 +457,7 @@
             margin: 2rem 0;
         }
         
-        [data-theme="dark"] .prompt-engineering {
-            background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
-            border-color: #059669;
-        }
+
         
         .prompt-engineering h4 {
             color: #065f46;
@@ -442,9 +466,7 @@
             font-weight: 600;
         }
         
-        [data-theme="dark"] .prompt-engineering h4 {
-            color: #6ee7b7;
-        }
+
         
         .prompt-engineering ul {
             list-style: none;
@@ -477,9 +499,7 @@
             margin: 2rem 0;
         }
         
-        [data-theme="dark"] .visualization-section {
-            background: #374151;
-        }
+
         
 
         
@@ -686,10 +706,10 @@
                 <a href="#description" class="nav-item" data-section="description">描述</a>
                 <a href="#discernment" class="nav-item" data-section="discernment">辨别</a>
                 <a href="#diligence" class="nav-item" data-section="diligence">尽职</a>
-                <button class="theme-toggle" id="themeToggle">
-                    <i class="fas fa-moon" id="themeIcon"></i>
-                    <span id="themeText">深色模式</span>
-                </button>
+                <a href="https://www.anthropic.com/ai-fluency" class="nav-item" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-external-link-alt"></i> 原课程
+                </a>
+
             </div>
         </div>
     </nav>
@@ -697,9 +717,13 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>AnthropicAI素养课程</h1>
-            <p class="hero-subtitle">掌握与AI协作的核心能力，构建高效、安全、合乎道德的人机协作关系</p>
-            <img src="./core_concepts/title.png" alt="课程标题" class="hero-image">
+            <div class="hero-text">
+                <h1>Anthropic AI素养课程</h1>
+                <p class="hero-subtitle">学习有效、高效、合乎道德且安全地与 AI 系统协作</p>
+            </div>
+            <div class="hero-visual">
+                <img src="./core_concepts/title.png" alt="课程标题" class="hero-image">
+            </div>
         </div>
     </section>
     
@@ -1036,35 +1060,7 @@
     </div>
     
     <script>
-        // Theme Management
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const themeText = document.getElementById('themeText');
-        const html = document.documentElement;
-        
-        // Initialize theme
-        const savedTheme = localStorage.getItem('theme') || 
-            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        
-        function setTheme(theme) {
-            if (theme === 'dark') {
-                html.setAttribute('data-theme', 'dark');
-                themeIcon.className = 'fas fa-sun';
-                themeText.textContent = '浅色模式';
-            } else {
-                html.removeAttribute('data-theme');
-                themeIcon.className = 'fas fa-moon';
-                themeText.textContent = '深色模式';
-            }
-            localStorage.setItem('theme', theme);
-        }
-        
-        setTheme(savedTheme);
-        
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
-            setTheme(currentTheme === 'dark' ? 'light' : 'dark');
-        });
+
         
         // Scroll Progress
         const scrollProgress = document.getElementById('scrollProgress');
@@ -1105,8 +1101,13 @@
         // Smooth scrolling for navigation
         navItems.forEach(item => {
             item.addEventListener('click', (e) => {
+                const href = item.getAttribute('href');
+                // Skip external links
+                if (href.startsWith('http') || href.startsWith('//')) {
+                    return;
+                }
                 e.preventDefault();
-                const targetId = item.getAttribute('href').substring(1);
+                const targetId = href.substring(1);
                 const targetSection = document.getElementById(targetId);
                 if (targetSection) {
                     targetSection.scrollIntoView({

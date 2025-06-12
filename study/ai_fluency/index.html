@@ -1,727 +1,1180 @@
 <!DOCTYPE html>
-
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Anthropic AI素养课程内容详细总结</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-            :root {
-                --font-size-body: 16px;
-                --font-size-h5: 16px;       
-                --font-size-h4: 18px;    
-                --font-size-h3: 20px;     
-                --font-size-h2: 24px;    
-                --font-size-h1: 28px;    
-            }
-            body {
-                font-feature-settings: 'liga' off, 'clig' off;
-                font-family: "SF Pro";
-                font-size: var(--font-size-body);
-                color: #333B46;
-                font-style: normal;
-                font-weight: 400;
-                line-height: 1.5; 
-                margin: 0 24px 0 24px; /* 上 右 下 左 */
-                padding: 0px;
-            }
-            .container {
-                max-width: 800px;
-                margin: 0px auto;
-                padding: 24px 40px;
-                background-color: #fff;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-                border-radius: 8px;
-            }
-            .chart-container {
-                position: relative;
-                margin: 3em auto;
-                max-width: 500px;
-                height: 400px;
-                overflow: visible;
-                aspect-ratio: 7/5;}
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnthropicAI素养课程 - 核心概念</title>
+    
+    <!-- External Resources -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/tailwindcss/2.2.19/tailwind.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #f1f5f9;
+            --accent-color: #06b6d4;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+            --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
         
+        [data-theme="dark"] {
+            --primary-color: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary-color: #1f2937;
+            --accent-color: #06b6d4;
+            --text-primary: #f9fafb;
+            --text-secondary: #d1d5db;
+            --border-color: #374151;
+            --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+            --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+        }
         
-        h1, h2, h3, h4 {
-            color: #2c3e50;
-            line-height: 1.3;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        h1 {
-            font-size: 2.2em;
-            border-bottom: 2px solid #e0e0e0;
-            padding-bottom: 0.5em;
-            margin-bottom: 1em;
+        
+        body {
+            font-family: 'Noto Sans SC', Tahoma, Arial, Roboto, "Droid Sans", "Helvetica Neue", "Droid Sans Fallback", "Heiti SC", "Hiragino Sans GB", Simsun, sans-serif;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background: var(--secondary-color);
+            transition: all 0.3s ease;
         }
-        h2 {
-            font-size: 1.8em;
-            margin-top: 1.5em;
-            margin-bottom: 0.8em;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 0.3em;
+        
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--gradient-accent);
+            z-index: 1000;
+            transition: width 0.3s ease;
         }
-        h3 {
-            font-size: 1.4em;
-            margin-top: 1.2em;
-            margin-bottom: 0.6em;
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 999;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
         }
-        h4 {
-            font-size: 1.2em;
-            margin-top: 1em;
-            margin-bottom: 0.4em;
+        
+        [data-theme="dark"] .navbar {
+            background: rgba(31, 41, 55, 0.95);
         }
-        p {
-            font-size: 1.1em;
-            margin-bottom: 1.2em;
-            text-align: justify;
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        ul, ol {
-            margin-bottom: 1.2em;
-            padding-left: 1.5em;
-        }
-        li {
-            margin-bottom: 0.5em;
-        }
-        blockquote {
-            font-style: italic;
-            border-left: 4px solid #7f8c8d;
-            padding-left: 1em;
-            margin-left: 0;
-            margin-right: 0;
-            color: #555;
-            background-color: #f8f9fa;
-            padding-top: 0.5em;
-            padding-bottom: 0.5em;
-        }
-        a {
-            color: #3498db;
+        
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
             text-decoration: none;
         }
-        a:hover {
-            text-decoration: underline;
+        
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
         }
-        .key-takeaways, .video-summary {
-            background-color: #ecf0f1;
-            padding: 1em;
-            border-radius: 4px;
-            margin-bottom: 1em;
+        
+        .nav-item {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
         }
-        .key-takeaways h4, .video-summary h4 {
-            margin-top: 0;
-            color: #2980b9;
+        
+        .nav-item:hover,
+        .nav-item.active {
+            color: var(--primary-color);
+            background: rgba(37, 99, 235, 0.1);
         }
-        .chart-container {
-            width: 100%;
-            max-width: 700px;
-            margin: 2em auto;
-            height: 400px; /* Ensure canvas has drawing space */
-            padding: 1em;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background-color: #fff;
-            aspect-ratio: 7/5;}
-        .report-by {
-            font-size: 0.9em;
-            color: #777;
-            margin-bottom: 2em;
-            text-align: right;
+        
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
         }
-        .current-date {
-            font-size: 0.9em;
-            color: #777;
-            text-align: right;
-            margin-bottom: 1em;
+        
+        .theme-toggle:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
         }
-    
-        .chart-container canvas {
-            width: 100% !important;
-            height: 100% !important;
-            object-fit: contain;
-}
-
-@media only screen and (max-device-width: 768px) {
-            body {
-                padding: 0;
-                margin: 0;
-                font-family: PingFang SC;
-                font-size: 15px;
-                line-height: 1.5;
-            }
-
-            .container {
-                padding: 0;
-                margin: 16px 20px 30px;
-                box-shadow: none;
-            }
-
-            h1,
-            h2,
-            h3,
-            h4 {
-                font-family: PingFang SC;
-            }
-
-            h1 {
-                font-size: 1.87em;
-                line-height: 1.6;
-                margin-bottom: 0.5em;
-                text-align: center;
-            }
-
-            h2 {
-                font-size: 1.6em;
-                font-weight: 600;
-                margin-top: 1.3em;
-                margin-bottom: 0.8em;
-                border-bottom: 1px solid #eee;
-                padding-bottom: 0.5em;
-            }
-
-            h3 {
-                font-size: 1.2em;
-                font-weight: 600;
-                margin-top: 1em;
-                margin-bottom: 0.6em;
-            }
-
-            h4 {
-                font-size: 1.1em;
-                font-weight: 500;
-                margin-top: 1em;
-                margin-bottom: 0.5em;
-                font-style: normal;
-            }
-
-            h5 {
-                font-size: 1em;
-                font-weight: 500;
-                margin-bottom: 1.2em;
-            }
-
-            ul,
-            ol {
-                font-size: 1em; /* Equivalent to 17.6px if base is 16px */
-                font-weight: 400;
-                margin-bottom: 1.2em;
-                line-height: 1.8;
-            }
-
-            p {
-                font-size: 1em;
-                line-height: 1.8; /* Equivalent to 17.6px if base is 16px */
-                font-weight: 400;
-                margin-top: 0.8em;
-                margin-bottom: 0.8em;
-            }
-
-            blockquote {
-                padding: 1em 1.2em;
-
-            p {
-                margin: 0;
-            }
-        }
-
-        figcaption {
-            margin-top: 0.5em;
-            font-size: 0.8em; /* Equivalent to 17.6px if base is 16px */
-            font-weight: 400;
+        
+        .hero {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 5rem 0 4rem;
             text-align: center;
-            font-style: normal;
-            color: #7F8896;
-        }
-
-        img {
-            display: block;
+            position: relative;
             overflow: hidden;
-            max-width: 100%;
-            max-height: 335px;
-            margin: 1em auto;
-            border-radius: 8px;
         }
-        ｝</style>
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient></defs><circle cx="200" cy="200" r="100" fill="url(%23a)"/><circle cx="800" cy="300" r="150" fill="url(%23a)"/><circle cx="400" cy="700" r="120" fill="url(%23a)"/></svg>') no-repeat center center;
+            background-size: cover;
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #ffffff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-image {
+            max-width: 400px;
+            margin: 0rem auto;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-large);
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .section {
+            padding: 0rem 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4rem;
+            height: 3px;
+            background: var(--gradient-accent);
+            border-radius: 2px;
+        }
+        
+        .framework-overview {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-medium);
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        [data-theme="dark"] .framework-overview {
+            background: #374151;
+        }
+        
+        .framework-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .framework-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        [data-theme="dark"] .framework-card {
+            background: #374151;
+        }
+        
+        .framework-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-accent);
+        }
+        
+        .framework-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-large);
+        }
+        
+        .framework-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .framework-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .content-section {
+            margin-bottom: 1rem;
+        }
+        
+        .content-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        [data-theme="dark"] .content-card {
+            background: #374151;
+        }
+        
+        .content-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .content-title i {
+            font-size: 1.5rem;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .image-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        
+        [data-theme="dark"] .image-card {
+            background: #4b5563;
+        }
+        
+        .image-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .image-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .image-card img:hover {
+            transform: scale(1.02);
+        }
+        
+
+        
+        .skills-list {
+            background: var(--secondary-color);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid var(--border-color);
+        }
+        
+        .skills-list h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .skills-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .skills-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            padding-left: 2rem;
+            color: var(--text-primary);
+        }
+        
+        .skills-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .skills-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid #f59e0b;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        [data-theme="dark"] .highlight-box {
+            background: linear-gradient(135deg, #451a03 0%, #78350f 100%);
+            border-color: #d97706;
+        }
+        
+        .highlight-box::before {
+            content: '💡';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .prompt-engineering {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border: 2px solid #10b981;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        [data-theme="dark"] .prompt-engineering {
+            background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+            border-color: #059669;
+        }
+        
+        .prompt-engineering h4 {
+            color: #065f46;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        [data-theme="dark"] .prompt-engineering h4 {
+            color: #6ee7b7;
+        }
+        
+        .prompt-engineering ul {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem 1rem;
+        }
+        
+        .prompt-engineering li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .prompt-engineering li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .visualization-section {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid var(--border-color);
+            margin: 2rem 0;
+        }
+        
+        [data-theme="dark"] .visualization-section {
+            background: #374151;
+        }
+        
+
+        
+        .reading-section {
+            background: var(--gradient-secondary);
+            color: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .reading-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .book-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .book-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .book-description {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+        
+        .footer {
+            background: var(--text-primary);
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 1rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-link {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: white;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.active {
+            display: flex;
+            opacity: 1;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-large);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 1001;
+            transition: color 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            color: #f87171;
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .framework-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .prompt-engineering ul {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .framework-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .prompt-engineering ul {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .content-title {
+                font-size: 1.5rem;
+            }
+            
+            .framework-overview,
+            .content-card,
+            .visualization-section {
+                padding: 2rem;
+            }
+            
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-<h1>Anthropic AI素养课程内容详细总结</h1>
-<div class="current-date">报告生成日期：2025-05-29</div>
-<section id="introduction">
-<h2>一、引言：AI素养赋能未来——Anthropic AI素养课程概览</h2>
-<p>本报告旨在深度剖析Anthropic公司推出的“AI Fluency: Framework &amp; Foundations”在线课程，系统性地提炼其核心教学理念、内容模块、关键知识点以及推荐的实践方法。分析范围主要基于Anthropic官方网站上该课程的公开信息，包括但不限于课程介绍、模块设置、各模块学习目标、核心视频内容摘要及练习建议。通过本次梳理，期望为关注AI发展的学习者、教育者及研究人员提供一份有价值的参考资料。</p>
-<p>Anthropic的AI素养课程，其核心理念突破了传统AI技术学习的范畴，转而强调培养个体与人工智能系统进行一种全新的协作关系。这种协作关系被定义为需同时具备<strong>有效性（Effective）、高效性（Efficient）、合乎道德性（Ethical）和安全性（Safe）</strong>四大特征。课程的目标并非传授昙花一现的AI操作技巧，而是致力于帮助学习者构建一个持久且灵活的AI协作框架。该框架旨在使学习者能够从容应对AI技术的飞速发展与持续迭代，确保其所学技能具有长期适用性。</p>
-<p>根据课程介绍 (<a href="https://www.anthropic.com/ai-fluency/introduction-to-ai-fluency" target="_blank">Introduction to AI Fluency</a>)，完成本课程的学习者预期将获得多方面的提升，包括：</p>
-<ul>
-<li>构建一个能够进行深思熟虑的人工智能互动框架。</li>
-<li>增强在不同情境下，明智选择何时以及如何有效利用AI辅助工作的信心与判断力。</li>
-<li>掌握与AI进行高效协作的实用技能。</li>
-<li>培养负责任地评估、验证和传播AI辅助型工作成果的能力。</li>
-</ul>
-</section>
-<section id="what-is-ai-fluency">
-<h2>二、课程基石：何谓AI素养及其重要性</h2>
-<p>在Anthropic的课程体系中，“AI素养”被赋予了深刻而具体的内涵。它不仅仅是对AI技术原理的理解，更是一种能够与AI系统进行<strong>有效、高效、合乎道德和安全</strong>协作的综合能力。这种素养强调的是人机协作的实践智慧、批判性思维以及在复杂情境下的适应能力，远超出了单纯的技术操作层面。</p>
-<h3>AI素养在当今时代的必要性</h3>
-<p>课程中的视频《Why do we need AI Fluency?》(6分钟) (<a href="https://www.anthropic.com/ai-fluency/overview" target="_blank">The AI Fluency Framework Overview</a>) 对此进行了深入阐述。随着人工智能技术的飞速发展，其已渗透到工作、学习和日常生活的方方面面，并带来了深远影响。个体若要适应这一变革并从中受益，掌握AI素养变得尤为紧迫。AI素养的重要性体现在：<em data-skywork="text_badge" data-sk-source-text="课程中的视频《Why do we need AI Fluency?》(6分钟) (The AI Fluency Framework Overview) 对此进行了深入阐述。随着人工智能技术的飞速发展，其已渗透到工作、学习和日常生活的方方面面，并带来了深远影响。个体若要适应这一变革并从中受益，掌握AI素养变得尤为紧迫。AI素养的重要性体现在：" id="skTag-778EU7" class="sk-source-tag" data-sk-source-id="778EU7" ></em></p>
-<ul>
-<li><strong>应对变革</strong>：帮助个体理解和适应AI带来的社会和职业变革。</li>
-<li><strong>提升效能</strong>：使个体能够利用AI提升工作效率和创新能力。</li>
-<li><strong>批判性应用</strong>：培养用户不仅将AI视为工具，更能成为明智的协作者和批判性的思考者，辨别AI的潜力和局限。</li>
-<li><strong>责任担当</strong>：确保个体在享受AI便利的同时，能够负责任地、合乎道德地使用AI。</li>
-</ul>
-<h3>人与AI协作的三种模式</h3>
-<p>课程进一步提出了当前人与AI协作的三种主要模式 (<a href="https://www.anthropic.com/ai-fluency/overview" target="_blank">The AI Fluency Framework Overview</a>)，这三种模式体现了人机关系的不同层次和互动方式：</p>
-<ol>
-<li><strong>自动化 (Automation)</strong>：
-                    <ul>
-<li><strong>定义</strong>：AI根据用户清晰、具体的指令完成预定任务。在此模式下，人类主要扮演指令下达者和结果验收者的角色。</li>
-<li><strong>特点</strong>：适用于重复性高、规则明确的任务，能显著提升效率。</li>
-<li><strong>场景示例</strong>：批量处理邮件、数据录入、生成标准化报告摘要等。</li>
-<li><strong>用户能力要求</strong>：清晰定义任务目标和流程的能力。</li>
-</ul>
-</li>
-<li><strong>增强 (Augmentation)</strong>：
-                    <ul>
-<li><strong>定义</strong>：人与AI作为创意思考和任务执行的伙伴，进行迭代式的协作。AI可能提供初步想法、数据分析、草稿撰写等，人类则在此基础上进行优化、深化和决策。</li>
-<li><strong>特点</strong>：适用于复杂、需要创造力或深度分析的任务，人机双方优势互补。</li>
-<li><strong>场景示例</strong>：与AI共同撰写研究论文、合作设计艺术作品、辅助编程调试等。</li>
-<li><strong>用户能力要求</strong>：有效的沟通、批判性评估AI输出、以及将AI的贡献整合到自身工作流中的能力。</li>
-</ul>
-</li>
-<li><strong>代理 (Agency)</strong>：
-                    <ul>
-<li><strong>定义</strong>：人类配置AI系统，使其能够代表自己独立工作或在特定领域自主决策。这要求人类预先设定AI的知识边界、行为模式和目标函数，而非仅仅分配具体任务。</li>
-<li><strong>特点</strong>：AI具有更高的自主性，能够在预设框架内独立运作，长期执行任务。</li>
-<li><strong>场景示例</strong>：构建个性化的智能辅导系统、开发能自主处理客户咨询的聊天机器人、部署能自动管理部分投资组合的AI策略等。</li>
-<li><strong>用户能力要求</strong>：对AI能力和局限的深刻理解、系统设计能力、以及对AI代理行为进行监督和调整的责任感。</li>
-</ul>
-</li>
-</ol>
-<p>理解这三种模式有助于用户根据具体需求选择最合适的协作方式，并对自身在协作中扮演的角色有更清晰的认知。</p>
-<h3>关键视频分析：《Introduction to AI Fluency》(4分钟)</h3>
-<div class="video-summary">
-<h4>核心内容与学习目标摘要</h4>
-<p>该视频（参见 <a href="https://www.anthropic.com/ai-fluency/introduction-to-ai-fluency" target="_blank">Introduction to AI Fluency</a> 页面）作为课程的开篇，其核心内容和学习目标可以总结为：</p>
-<ul>
-<li><strong>课程焦点</strong>：明确课程的核心是发展与AI之间有意义的、深度的协作关系，而非停留在对AI技术本身的浅层学习。它旨在建立一个超越简单技巧、能够持久适应AI发展的框架。</li>
-<li><strong>AI素养释义</strong>：解释了课程所倡导的AI素养——即以有效、高效、合乎道德和安全的方式与AI协作的能力。</li>
-<li><strong>课程结构概览</strong>：简要介绍了课程的整体结构，预告了将要学习的核心内容，特别是AI素养的“4D”核心能力（委派、描述、辨别、勤勉）以及相关的关键技术和实践概念。</li>
-<li><strong>学习目标设定</strong>：
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-brand">
+                <i class="fas fa-brain"></i> AI素养课程
+            </a>
+            <div class="nav-menu">
+                <a href="#framework" class="nav-item" data-section="framework">框架概览</a>
+                <a href="#delegation" class="nav-item" data-section="delegation">委派</a>
+                <a href="#description" class="nav-item" data-section="description">描述</a>
+                <a href="#discernment" class="nav-item" data-section="discernment">辨别</a>
+                <a href="#diligence" class="nav-item" data-section="diligence">尽职</a>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                    <span id="themeText">深色模式</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>AnthropicAI素养课程</h1>
+            <p class="hero-subtitle">掌握与AI协作的核心能力，构建高效、安全、合乎道德的人机协作关系</p>
+            <img src="./core_concepts/title.png" alt="课程标题" class="hero-image">
+        </div>
+    </section>
+    
+    <!-- Framework Overview -->
+    <section id="framework" class="section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-sitemap"></i> AI素养框架
+            </h2>
+            
+            <div class="framework-overview">
+                <div class="image-grid">
+                    <div class="image-card">
+                        <img src="./core_concepts/framework.png" alt="AI素养框架（英文版）">
+
+                    </div>
+                    <div class="image-card">
+                        <img src="./core_concepts/framework-cn.png" alt="AI素养框架（中文版）">
+
+                    </div>
+                </div>
+                
+                <div class="highlight-box">
+                    <p><strong>AI素养的核心是能够高效、有效、安全且合乎道德地与AI系统互动</strong></p>
+                    <p>AI素养框架围绕"4D"能力构建：</p>
+                </div>
+                
+                <div class="framework-grid">
+                    <div class="framework-card">
+                        <h3><i class="fas fa-tasks"></i> 委派 (Delegation)</h3>
+                        <p>任务委派合理分配人机分工</p>
+                    </div>
+                    <div class="framework-card">
+                        <h3><i class="fas fa-comment-dots"></i> 描述 (Description)</h3>
+                        <p>需求描述——精准表达指令与需求</p>
+                    </div>
+                    <div class="framework-card">
+                        <h3><i class="fas fa-search"></i> 辨别 (Discernment)</h3>
+                        <p>准确评估AI输出与行为的有用性</p>
+                    </div>
+                    <div class="framework-card">
+                        <h3><i class="fas fa-shield-alt"></i> 尽职 (Diligence)</h3>
+                        <p>对我们使用AI的方式和行为负责</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Visualization Section -->
+
+            
+            <div class="image-grid">
+                <div class="image-card">
+                    <img src="./core_concepts/summary.png" alt="课程总览（英文版）">
+                    
+                </div>
+                <div class="image-card">
+                    <img src="./core_concepts/summary-cn.png" alt="课程总览（中文版）">
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Delegation Section -->
+    <section id="delegation" class="section">
+        <div class="container">
+            <div class="content-section">
+                <div class="content-card">
+                    <h2 class="content-title">
+                        <i class="fas fa-tasks"></i> 委派 (Delegation)
+                    </h2>
+                    
+                    <div class="image-grid">
+                        <div class="image-card">
+                            <img src="./core_concepts/delegation.png" alt="委派概念（英文版）">
+
+                        </div>
+                        <div class="image-card">
+                            <img src="./core_concepts/delegation-cn.png" alt="委派概念（中文版）">
+
+                        </div>
+                    </div>
+                    
+                    <p>委派是AI素养的第一环，指的是用户经过深思熟虑，判断哪些工作任务适合交由AI处理或与AI协作完成，哪些部分仍需人类主导，并据此选择最合适的AI工具及协作模式。这不仅仅是一个技术选择，更是一个策略性决策过程。</p>
+                    
+                    <div class="highlight-box">
+                        <p><strong>委派的核心在于"决定何时以及如何使用AI，并为任务选择正确的工具"</strong></p>
+                    </div>
+                    
+                    <div class="skills-list">
+                        <h4>我们需要：</h4>
                         <ul>
-<li>引导学习者理解本课程的目的和结构。</li>
-<li>帮助学习者认识到AI素养在当今世界的重要性。</li>
-<li>清晰指明学习者在接下来的学习旅程中将接触到的关键组成部分。</li>
-<li>为学习者设定明确的期望，使其了解通过本课程能够获得的知识和技能。</li>
-</ul>
-</li>
-</ul>
-<p>通过这段介绍，学习者可以对课程的价值主张和学习路径有一个初步但全面的认识，为后续深入学习奠定基础。</p>
-</div>
-</section>
-<section id="4d-framework">
-<h2>三、核心框架深度解析：AI素养的“4D”能力</h2>
-<p>Anthropic AI素养课程的核心，是其精心构建的“4D”能力框架。这一框架是实现与AI进行有效、高效、合乎道德和安全协作的基石。正如课程视频《The 4D Framework》(5分钟) (<a href="https://www.anthropic.com/ai-fluency/overview" target="_blank">The AI Fluency Framework Overview</a>) 所阐述的，这四个“D”——即<strong>委派 (Delegation)、描述 (Description)、辨别 (Discernment)和勤勉 (Diligence)</strong>——并非孤立存在，而是相互关联、协同作用，共同构成一个完整的AI素养能力体系。该框架的构建逻辑在于，它提供了一套可操作的原则和技能，帮助人们在快速变化的AI时代中保持主动性和批判性。这四种能力贯穿于前述的三种人机协作模式（自动化、增强、代理）的始终，为用户提供了在不同场景下与AI互动的行为指南。<em data-skywork="text_badge" data-sk-source-text="Anthropic AI素养课程的核心，是其精心构建的“4D”能力框架。这一框架是实现与AI进行有效、高效、合乎道德和安全协作的基石。正如课程视频《The 4D Framework》(5分钟) (The AI Fluency Framework Overview) 所阐述的，这四个“D”——即委派 (Delegation)、描述 (Description)、辨别 (Discernment)和勤勉 (Diligence)——并非孤立存在，而是相互关联、协同作用，共同构成一个完整的AI素养能力体系。该框架的构建逻辑在于，它提供了一套可操作的原则和技能，帮助人们在快速变化的AI时代中保持主动性和批判性。这四种能力贯穿于前述的三种人机协作模式（自动化、增强、代理）的始终，为用户提供了在不同场景下与AI互动的行为指南。" id="skTag-NKNFUY" class="sk-source-tag" data-sk-source-id="NKNFUY" ></em></p>
-<h3>1. 委派 (Delegation)：明智地选择与AI协作的任务与方式</h3>
-<div class="key-takeaways">
-<h4>定义与核心要义</h4>
-<p>委派是AI素养的第一环，指的是用户经过深思熟虑，判断哪些工作任务适合交由AI处理或与AI协作完成，哪些部分仍需人类主导，并据此选择最合适的AI工具及协作模式。这不仅仅是一个技术选择，更是一个策略性决策过程。</p>
-<p>根据AI Advisory Boards的一篇文章 (<a href="https://aiadvisoryboards.wordpress.com/2025/05/29/teaching-ai-to-teenagers-why-the-framework-for-ai-fluency-just-works/" target="_blank">Teaching AI to Teenagers</a>)，委派的核心在于“决定何时以及如何使用AI，并为任务选择正确的工具 (Deciding when and how to use AI, and choosing the right tools for the task)”。</p>
-</div>
-<h4>学习目标</h4>
-<p>（由于官方课程页面中关于“Delegation”模块的具体内容未能完整抓取，以下学习目标基于其定义及框架整体性推演，并参考了辅助资料。）</p>
-<ul>
-<li>理解在何种情况下、出于何种原因以及采用何种方式将特定任务委派给AI是合理的。</li>
-<li>培养评估不同AI工具在特定任务上的适用性、优势与局限性的能力。</li>
-<li>学会在具体任务中，如何恰当平衡人类与AI的角色和职责分配，以达到最佳协同效能。</li>
-<li>认知到委派决策对后续协作效率、成果质量及潜在风险的影响。</li>
-</ul>
-<h4>关键考量因素</h4>
-<p>在进行委派决策时，需综合考虑以下因素：</p>
-<ul>
-<li><strong>任务性质</strong>：任务的复杂性、创造性要求、重复性程度、对精确性的要求等。</li>
-<li><strong>能力匹配</strong>：个人或团队的既有技能与AI在该任务上的能力（如数据处理、模式识别、内容生成）是否匹配，能否形成互补。</li>
-<li><strong>成果预期</strong>：对任务成果的质量标准、创新性要求、以及完成时限。</li>
-<li><strong>效益与成本</strong>：使用AI可能带来的时间节省、成本降低或价值提升，相对于投入（学习成本、工具成本、风险成本）的权衡。</li>
-<li><strong>风险评估</strong>：AI处理任务可能存在的偏见、错误、安全漏洞或伦理问题，以及相应的应对策略。</li>
-</ul>
-<h4>实践方法/练习启示</h4>
-<p>课程在“The AI Fluency Framework Overview”模块 (<a href="https://www.anthropic.com/ai-fluency/overview" target="_blank">Overview</a>) 中提供了一些练习场景，如“传播项目 (Communication Project)”、“研究项目 (Research Project)”和“创意项目 (Creative Project)”。在这些项目中，学习者会被引导思考：</p>
-<blockquote>
-<p><strong>针对传播项目：</strong>该项目的哪些方面您会自己处理，哪些方面会与AI协作？</p>
-<p><strong>针对研究项目：</strong>您将如何在自己和AI之间分配分析工作？</p>
-<p><strong>针对创意项目：</strong>您希望通过AI协作探索哪些创意元素，又有哪些希望独立开发？</p>
-</blockquote>
-<p>这些问题正是委派能力在实践中的具体体现。<em>（注：关于“Delegation”模块的官方详细学习目标和练习，有待课程完整发布后获取。）</em></p>
-<h3>2. 描述 (Description)：精准地向AI传达意图与需求</h3>
-<div class="key-takeaways">
-<h4>定义与核心要义</h4>
-<p>描述是实现有效人机协作的关键沟通环节。它不仅指编写有效的提示词（prompts），更是一门与AI系统进行清晰、有目的沟通的艺术，旨在创造一个人类与AI能够高效协同工作的环境。核心在于确保AI准确理解用户的意图、需求、期望的输出形式以及协作过程中的行为方式。</p>
-</div>
-<h4>学习目标 (源自: <a href="https://www.anthropic.com/ai-fluency/description" target="_blank">Description Module</a>)</h4>
-<ul>
-<li>理解如何有效地向AI系统传达自己的意图和需求。</li>
-<li>认识到在人机协作中，清晰、有目的的沟通至关重要。</li>
-<li>发展在三个关键层面的描述技能：产品描述、过程描述和性能描述。</li>
-</ul>
-<h4>关键组成部分（基于视频《A Closer Look at Description》(4分钟)）</h4>
-<p>该视频 (详见 <a href="https://www.anthropic.com/ai-fluency/description" target="_blank">Description Module</a>) 强调了“描述”能力的三个关键组成：</p>
-<ul>
-<li><strong>产品描述 (Product Description)</strong>：清晰、具体地定义你希望AI创造出什么样的最终成果。这可能包括内容的主题、风格、格式、长度、目标受众等。例如，“请生成一篇关于可再生能源未来趋势的500字博客文章，风格应专业且易于理解，面向对该领域感兴趣的普通读者。”</li>
-<li><strong>过程描述 (Process Description)</strong>：指导AI如何处理你的请求，即你希望AI采用什么样的方法或步骤来完成任务。这可能包括要求AI扮演特定角色、遵循特定思考框架、参考特定信息源或避免某些内容。例如，“在撰写上述博客时，请先进行文献综述，重点关注太阳能和风能，并分析其经济和环境影响。”</li>
-<li><strong>性能描述 (Performance Description)</strong>：定义你希望AI在整个协作互动过程中的行为方式和沟通风格<em data-skywork="text_badge" data-sk-source-text="性能描述 (Performance Description)：定义你希望AI在整个协作互动过程中的行为方式和沟通风格。" id="skTag-JDHC06" class="sk-source-tag" data-sk-source-id="JDHC06" ></em>。这可能包括要求AI提问以澄清模糊之处、提供多个选项、保持某种语气（如友好、正式）等。例如，“如果你对我的任何指令有疑问，请随时提出。请以合作和探索的语气与我交流。”</li>
-</ul>
-<h4>核心技能</h4>
-<p>提升描述能力需要掌握以下核心技能：</p>
-<ul>
-<li><strong>清晰表达</strong>：用明确无歧义的语言阐述需求。</li>
-<li><strong>结构化指令</strong>：将复杂任务分解为更小、更易于AI理解的步骤。</li>
-<li><strong>提供上下文</strong>：给予AI足够的背景信息，帮助其更好地把握任务的核心。</li>
-<li><strong>迭代优化</strong>：根据AI的初步反馈，不断调整和完善描述，直至达到预期效果。</li>
-</ul>
-<p>课程强调，<strong>AI无法读取用户的思想</strong>，因此，人机协作成果的质量在很大程度上取决于用户能否清晰、全面地阐述其需求、偏好的处理方式以及期望的互动风格。</p>
-<h4>实践方法/练习启示</h4>
-<p>虽然 <a href="https://www.anthropic.com/ai-fluency/description" target="_blank">Description Module</a> 页面未直接提供具体的练习细节，但可以推断练习将围绕上述三个组成部分展开，例如要求学生针对不同场景（如内容创作、问题解决、数据分析）撰写和优化对AI的描述指令，并观察不同描述方式对AI输出结果的影响。</p>
-<h3>3. 辨别 (Discernment)：批判性地评估AI的输出与过程</h3>
-<div class="key-takeaways">
-<h4>定义与核心要义</h4>
-<p>辨别是AI素养中与“描述”相辅相成的关键能力，它指的是用户审慎、批判性地评估AI所生成的输出内容、其达成输出所采用的过程以及在互动中的行为表现。如果说“描述”是向AI有效输入，那么“辨别”就是对AI的输出进行有效把关。</p>
-</div>
-<h4>学习目标 (源自: <a href="https://www.anthropic.com/ai-fluency/discernment" target="_blank">Discernment Module</a>)</h4>
-<ul>
-<li>理解如何以深思熟虑的方式评估AI的输出和执行过程。</li>
-<li>发展在与AI互动过程中所需的批判性思维技能。</li>
-<li>学习识别并有效处理在AI互动中可能出现的质量问题。</li>
-</ul>
-<h4>关键组成部分（基于视频《A Closer Look at Discernment》(5分钟)）</h4>
-<p>该视频 (详见 <a href="https://www.anthropic.com/ai-fluency/discernment" target="_blank">Discernment Module</a>) 将“辨别”能力细化为三个层面：</p>
-<ul>
-<li><strong>产品辨别 (Product Discernment)</strong>：关注对AI实际输出成果的质量评估<em data-skywork="text_badge" data-sk-source-text="产品辨别 (Product Discernment)：关注对AI实际输出成果的质量评估。" id="skTag-MI8MXG" class="sk-source-tag" data-sk-source-id="MI8MXG" ></em>。这包括判断其准确性（是否包含事实错误或误导信息）、适当性（是否符合任务要求和伦理规范）、连贯性（逻辑是否清晰、行文是否流畅）和相关性（是否切题、是否有价值）。</li>
-<li><strong>过程辨别 (Process Discernment)</strong>：评估AI是如何达成其输出结果的。这涉及到审视AI在处理任务时是否存在逻辑错误、注意力偏差（如遗漏关键信息）、不恰当的推理方式或依赖了不可靠的数据源。</li>
-<li><strong>性能辨别 (Performance Discernment)</strong>：评估AI在与用户协作过程中的行为表现本身。这包括考量AI的沟通风格是否清晰、是否能有效响应用户指令和反馈、是否表现出“理解”用户的深层需求，以及其交互方式是否适合用户的特定需求和场景。</li>
-</ul>
-<h4>核心技能</h4>
-<p>提升辨别能力需要培养以下核心技能：</p>
-<ul>
-<li><strong>事实核查</strong>：验证AI提供信息的准确性，尤其对于关键数据和论断。</li>
-<li><strong>逻辑分析</strong>：审视AI的推理过程是否合理，是否存在逻辑谬误。</li>
-<li><strong>识别偏见</strong>：警惕AI输出中可能存在的来自训练数据或算法本身的偏见。</li>
-<li><strong>评估创造性与原创性</strong>：对于创意类任务，判断AI生成内容的独特性和价值。</li>
-<li><strong>理解局限性</strong>：认识到AI当前的技术边界，不盲从其所有输出。</li>
-</ul>
-<p>课程强调，<strong>即使是最先进的人工智能系统，也离不开人类的判断和监督</strong>。辨别能力与描述能力在一个人机协作的持续反馈循环中紧密配合，共同提升协作质量。</p>
-<h4>实践方法/练习启示</h4>
-<p>“Discernment”模块 (<a href="https://www.anthropic.com/ai-fluency/discernment" target="_blank">Discernment Module</a>) 提供了一个名为“Expert Discernment: Evaluating AI Responses in Your Domain”的练习。该练习要求学习者：</p>
-<ol>
-<li>选择一个自己具有专业知识和浓厚兴趣的领域。</li>
-<li>让Claude（或其他AI）就该领域特定方面生成三个不同的解释或分析。</li>
-<li>运用自己的专业知识，从产品、过程、性能三个维度仔细评估AI的每个回答，例如：
-                    <ul>
-<li>哪个解释最准确？有无事实错误？细节程度是否合适？(产品辨别)</li>
-<li>AI的推理逻辑是否清晰？有无分析漏洞？概念联系是否恰当？(过程辨别)</li>
-<li>AI是否关注了具体问题？对反馈和指令的响应如何？术语使用是否专业？语气风格对清晰度的影响？(性能辨别)</li>
-</ul>
-</li>
-<li>基于评估，向AI提供具体反馈，指出最强和最弱的解释及其原因，并与AI合作改进。</li>
-<li>与AI讨论反思：哪些专业知识帮助了评估？缺乏专业知识的人可能面临哪些困难？这次经历对理解领域知识与有效辨别之间关系有何启示？</li>
-</ol>
-<p>这个练习旨在通过实践，让学习者切身体会如何在自己擅长的领域运用辨别能力，并认识到领域知识对于提升辨别AI输出质量的重要性。</p>
-<h3>4. 勤勉 (Diligence)：负责任地监督与应用AI的成果</h3>
-<div class="key-takeaways">
-<h4>定义与核心要义</h4>
-<p>勤勉是“4D”框架中至关重要的一环，它关注的是在人机协作全过程中确保负责任性、透明度和问责制，尤其强调AI应用的伦理考量和安全保障。它要求用户对AI辅助生成或共同创造的内容和决策承担最终责任。</p>
-<p>根据AI Advisory Boards的文章 (<a href="https://aiadvisoryboards.wordpress.com/2025/05/29/teaching-ai-to-teenagers-why-the-framework-for-ai-fluency-just-works/" target="_blank">Teaching AI to Teenagers</a>)，勤勉的核心是“承担所有权，保持透明，并确保AI生成的工作合乎道德、准确且适当 (Taking ownership, being transparent, and ensuring that AI-generated work is ethical, accurate, and appropriate)。”<em data-skywork="text_badge" data-sk-source-text="根据AI Advisory Boards的文章 (Teaching AI to Teenagers)，勤勉的核心是“承担所有权，保持透明，并确保AI生成的工作合乎道德、准确且适当 (Taking ownership, being transparent, and ensuring that AI-generated work is ethical, accurate, and appropriate)。”" id="skTag-MI8MXH" class="sk-source-tag" data-sk-source-id="MI8MXH" ></em></p>
-</div>
-<h4>学习目标</h4>
-<p>（由于官方课程页面中关于“Diligence”模块的具体内容未能完整抓取，以下学习目标基于其定义及框架整体性推演，并参考了辅助资料。）</p>
-<ul>
-<li>深刻理解在AI协作中人类承担最终责任的必要性和重要性。</li>
-<li>学习如何系统性地检查和确保AI生成或辅助生成的内容在准确性、合乎道德以及场景适宜性方面达到标准。</li>
-<li>培养识别和认知AI应用相关的潜在风险（如固有偏见、错误信息传播、隐私侵犯、恶意使用等）的能力，并主动采取规避或缓解措施。</li>
-<li>掌握在工作中适当声明AI使用情况（透明度）的方法和原则。</li>
-</ul>
-<h4>关键实践</h4>
-<p>践行勤勉能力，通常涉及以下关键活动：</p>
-<ul>
-<li><strong>透明度 (Transparency)</strong>：在适当的时候清晰声明AI在工作成果中的参与程度和扮演角色，避免误导。</li>
-<li><strong>问责制 (Accountability)</strong>：人类用户对最终输出的成果（无论是文本、代码、设计还是决策建议）负有最终审查和确认的责任。</li>
-<li><strong>数据隐私与安全</strong>：在使用AI处理敏感数据时，严格遵守数据保护法规和伦理准则，确保数据安全。</li>
-<li><strong>避免有害应用</strong>：警惕并主动避免将AI技术用于可能导致歧视、散布虚假信息、侵犯人权或造成其他社会危害的场景。</li>
-<li><strong>持续学习与适应</strong>：由于AI技术和相关伦理规范在不断发展，保持学习心态，持续更新知识，适应新的挑战。</li>
-<li><strong>人类监督与干预</strong>：在AI决策或执行流程中设置必要的人类监督节点，确保在关键时刻可以进行人工干预和纠偏。</li>
-</ul>
-<h4>强调</h4>
-<p>勤勉能力的核心是将人类的核心价值观和严谨的道德考量置于AI设计、开发、部署和应用的全过程，确保技术的发展服务于人类福祉，而非带来潜在风险或损害。<em>（注：关于“Diligence”模块的官方详细学习目标和练习，有待课程完整发布后获取。）</em></p>
-<h3>5. 描述-辨别循环 (The Description-Discernment Loop)</h3>
-<div class="key-takeaways">
-<h4>核心理念</h4>
-<p>课程特别强调了“描述 (Description)”和“辨别 (Discernment)”之间形成的动态反馈循环。这不是一个线性的单向过程，而是一个持续的、迭代的优化过程。用户首先通过“描述”向AI系统清晰传达其意图和需求，AI根据这些指令生成初步输出。随后，用户运用“辨别”能力，对AI的输出（产品、过程、性能）进行批判性评估。基于评估的结果，用户会反思其初始“描述”的有效性，并对其进行调整和优化，然后再次向AI发出指令。如此循环往复，通过不断的“描述-评估-调整描述”，用户逐渐引导AI产出更符合期望、质量更高的成果，同时也提升了人机协作的整体效率和默契度。</p>
-</div>
-<h4>学习目标</h4>
-<p>（此学习目标基于 <a href="https://www.anthropic.com/ai-fluency/description-discernment-loop" target="_blank">The Description-Discernment Loop</a> 页面信息的推断。）</p>
-<ul>
-<li>深刻理解“描述”与“辨别”能力在人机协作中相辅相成、不可分割的关系。</li>
-<li>学会在实际的AI协作项目中，有意识地、系统地运用描述-辨别循环来进行迭代式改进。</li>
-<li>培养通过观察AI反馈来反思和优化自身“描述”策略的能力。</li>
-<li>提升在循环过程中识别关键模式、调整协作策略的敏锐度。</li>
-</ul>
-<h4>实践启示</h4>
-<p>从参考资料中 <a href="https://www.anthropic.com/ai-fluency/description-discernment-loop" target="_blank">The Description-Discernment Loop</a> 页面的“What’s next”部分的预告（该页面似乎是一个总结或过渡模块，其“What’s next”指向Diligence模块）中，可以推断课程会引导学生回顾在具体项目（可能指之前的练习或一个贯穿始终的课程项目）执行过程中：</p>
-<ul>
-<li>他们是如何运用描述和辨别能力的。</li>
-<li>在哪些类型的描述（产品、过程、性能）上投入了更多精力，以及原因。</li>
-<li>观察到了哪些描述模式更容易导向优质的AI输出结果。</li>
-<li>实际的项目执行过程与最初的计划（可能在早期委派阶段制定）有何不同，以及在此过程中是如何进行调整的。</li>
-</ul>
-<p>这种反思性的学习活动，旨在强化学习者对描述-辨别循环的理解和应用，使其成为一种内化的协作习惯。</p>
-</section>
-<section id="generative-ai">
-<h2>四、技术基底解读：理解生成式AI的工作原理与局限</h2>
-<p>为了更有效地运用“4D”能力框架，尤其是“委派”能力，课程设置了“Deep Dive 1: What is Generative AI?”模块 (<a href="https://www.anthropic.com/ai-fluency/deep-dive-1-what-is-generative-ai" target="_blank">Deep Dive 1</a>)。该模块旨在帮助学习者理解生成式AI的技术基础、核心特征、当前能力以及尚存的局限性。</p>
-<h3>生成式AI的定义与特征</h3>
-<p>根据课程视频《Generative AI fundamentals》(6分钟)，生成式AI的核心特征在于其<strong>创造新内容的能力</strong><em data-skywork="text_badge" data-sk-source-text="根据课程视频《Generative AI fundamentals》(6分钟)，生成式AI的核心特征在于其创造新内容的能力。" id="skTag-KGLY4J" class="sk-source-tag" data-sk-source-id="KGLY4J" ></em>。与传统分析型AI主要对现有数据进行分类、预测或洞察不同，生成式AI（如大型语言模型LLMs）能够生成全新的文本、图像、音频、代码等。它不仅仅是处理信息，更是信息的创造者。该视频深入浅出地解释了大型语言模型（如Claude）的工作方式，以及使其成为可能的技术发展历程。<em data-skywork="text_badge" data-sk-source-text="该视频深入浅出地解释了大型语言模型（如Claude）的工作方式，以及使其成为可能的技术发展历程。" id="skTag-KGLY4K" class="sk-source-tag" data-sk-source-id="KGLY4K" ></em></p>
-<h3>技术基础与发展历程</h3>
-<p>现代生成式AI系统，特别是大型语言模型（LLMs），的崛起并非偶然，而是基于三大关键性技术发展：</p>
-<ol>
-<li><strong>算法与架构的突破</strong>：尤其是Transformer架构的提出，它通过自注意力机制 (self-attention mechanism) 极大地提升了模型处理长序列数据的能力和并行计算效率，为构建更大、更复杂的模型奠定了基础。</li>
-<li><strong>海量数字训练数据</strong>：互联网的普及产生了前所未有的海量数字化文本和多媒体数据，为训练这些需要大量“喂养”的模型提供了充足的“养料”。</li>
-<li><strong>计算能力的显著提升</strong>：如图形处理器（GPUs）和张量处理器（TPUs）等专用硬件的发展，以及分布式计算技术的进步，使得训练参数量动辄百亿、千亿甚至万亿级别的模型成为可能。</li>
-</ol>
-<p>生成式AI的学习过程通常包括两个主要阶段：</p>
-<ul>
-<li><strong>预训练 (Pre-training)</strong>：模型在海量、多样化的未标注数据上进行学习，通过预测文本中的下一个词元（token）或填补缺失部分等方式，捕捉数据中的统计规律、语言模式、世界知识等。这个阶段的目标是让模型“理解”语言和概念。</li>
-<li><strong>微调 (Fine-tuning)</strong>：在预训练模型的基础上，使用更小、更具针对性的、通常包含人类指令和期望输出的数据集进行进一步训练。目的是使模型学会遵循指令、进行有益的对话、对齐人类偏好（如减少有害输出）。</li>
-</ul>
-<p>课程中还提及了两个重要概念：</p>
-<ul>
-<li><strong>上下文窗口 (Context Windows)</strong>：指AI模型在一次交互中能够处理和记忆的信息量（通常以词元数量衡量）。超出上下文窗口的信息可能会被模型“遗忘”。</li>
-<li><strong>涌现能力 (Emergent Capabilities)</strong>：指随着模型规模（参数量、数据量）的增大，模型会自发地表现出一些在小模型上未曾预见或训练过的新能力，如进行简单推理、代码生成、多语言翻译等。</li>
-</ul>
-<h3>当前能力与局限性分析</h3>
-<p>课程视频《Capabilities &amp; limitations》(7分钟) 对当前生成式AI的能力与局限性进行了客观的分析：</p>
-<h4>主要能力：</h4>
-<ul>
-<li><strong>任务多功能性 (Versatility across tasks)</strong>：能够处理多种类型的语言任务，如文本生成、摘要、翻译、问答、代码编写等。</li>
-<li><strong>对话感知能力 (Conversational awareness)</strong>：能够在多轮对话中保持一定的连贯性，理解对话历史对当前交流的影响。</li>
-<li><strong>快速任务切换 (Ability to switch between diverse tasks without additional training)</strong>：大型预训练模型通常在预训练阶段已接触过多种任务模式，因此在面对新类型任务时，往往无需针对性再训练就能展现出一定的处理能力（零样本或少样本学习）。</li>
-<li><strong>连接外部工具 (Ability to connect with external tools)</strong>：通过API等方式，可以与其他软件或数据源集成，扩展其信息获取和执行能力（例如，通过插件联网搜索最新信息）。</li>
-</ul>
-<h4>主要局限性：</h4>
-<ul>
-<li><strong>知识截止日期 (Knowledge cutoff dates)</strong>：模型的知识通常仅限于其训练数据截止的日期，对于之后发生的新事件或信息可能无法准确回应。</li>
-<li><strong>幻觉 (Hallucinations)</strong>：有时会生成看似合理但实际上不正确或完全虚构的信息。这是当前LLMs面临的一大挑战。</li>
-<li><strong>上下文窗口限制 (Context window constraints)</strong>：如前所述，模型能处理的上下文长度有限，对于超长文本或复杂对话的理解和记忆能力会下降。</li>
-<li><strong>复杂推理挑战 (Challenges with complex reasoning)</strong>：尽管在某些推理任务上表现不俗，但在需要多步、深度或抽象逻辑推理的复杂问题上，AI仍可能出错或表现不稳定。</li>
-</ul>
-<h3>人机协同的重要性</h3>
-<p>该模块特别强调，鉴于当前生成式AI的能力和局限性，最有效的应用模式是将人类的独特优势（如批判性思维、深度理解、创造力、常识判断、伦理监督）与AI的优势（如快速处理信息、模式识别、内容生成）相结合。人类在协作中提供目标设定、方向指引、质量把控和责任担当，而AI则作为强大的助手，辅助人类更高效地完成任务。这种人机协同的理念贯穿整个AI素养课程。</p>
-<h4>学习目标总结 (源自: <a href="https://www.anthropic.com/ai-fluency/deep-dive-1-what-is-generative-ai" target="_blank">Deep Dive 1</a>)</h4>
-<ul>
-<li>能够清晰定义什么是生成式AI，并解释其与其他类型AI（如分析型AI）的主要区别。</li>
-<li>识别生成式AI的关键特征和支撑其发展的核心技术基础（如Transformer架构、大规模数据、计算能力）。</li>
-<li>明确当前生成式AI在各种任务上的主要能力范围以及尚存在的关键局限性。</li>
-</ul>
-<p>通过学习这些技术背景知识，学习者能更深刻地理解AI的“内心世界”，从而在实践“4D”能力，尤其是进行明智的“委派(Delegation)”时，做出更合理的判断和决策。</p>
-</section>
-<section id="course-structure">
-<h2>五、课程结构、工具与实践方法</h2>
-<p>Anthropic的“AI Fluency: Framework &amp; Foundations”课程在结构设计、学习工具选用及教学方法上均体现了其培养实用型AI素养的目标。课程不仅传授理论框架，更强调通过实践和反思来内化所学知识。</p>
-<h3>整体课程结构</h3>
-<ul>
-<li><strong>课程名称</strong>：AI Fluency: Framework &amp; Foundations (<a href="https://www.anthropic.com/ai-fluency" target="_blank">Anthropic AI Fluency</a>)<em data-skywork="text_badge" data-sk-source-text="课程名称：AI Fluency: Framework &amp; Foundations (Anthropic AI Fluency)" id="skTag-778ETC" class="sk-source-tag" data-sk-source-id="778ETC" ></em></li>
-<li><strong>预计总时长</strong>：整个课程预计需要 3-4 小时完成。<em data-skywork="text_badge" data-sk-source-text="预计总时长：整个课程预计需要 3-4 小时完成。" id="skTag-778ETC" class="sk-source-tag" data-sk-source-id="778ETC" ></em></li>
-<li><strong>模块数量</strong>：根据“Deep Dive 1: What is Generative AI?”页面 (<a href="https://www.anthropic.com/ai-fluency/deep-dive-1-what-is-generative-ai" target="_blank">Deep Dive 1</a>) 的信息，整个课程包含 12 个模块。每个模块的时长不等，例如“Introduction to AI Fluency”预计10-15分钟，“The AI Fluency Framework (Overview)”预计25-35分钟。</li>
-<li><strong>逻辑递进</strong>：课程设计遵循从宏观到微观，从理论到实践的逻辑顺序。
-                    <ol>
-<li><strong>引论与基础</strong>：首先介绍课程概览、AI素养的重要性（如“Introduction to AI Fluency”模块）。</li>
-<li><strong>核心框架</strong>：详细阐述AI素养的“4D”能力框架（Delegation, Description, Discernment, Diligence），这是课程的核心（如“The AI Fluency Framework (Overview)”, “Description”, “Discernment”模块）。</li>
-<li><strong>技术深潜</strong>：提供对关键AI技术（如生成式AI）的深入理解，为应用框架提供技术背景（如“Deep Dive 1: What is Generative AI?”模块）。</li>
-<li><strong>实践与应用</strong>：每个模块通常都包含练习和反思环节，鼓励学习者将理论应用于实际场景。</li>
-</ol>
-</li>
-</ul>
-<h3>学习工具与资源</h3>
-<ul>
-<li><strong>核心AI工具</strong>：课程推荐并以Anthropic自家的AI助手<strong>Claude</strong>作为示例进行练习。学习者可以访问 <a href="https://claude.ai" target="_blank">claude.ai</a> 创建免费账户。重要的是，课程强调其教授的原则和技能具有普适性，可以应用于任何用户偏好的语言模型，完成课程活动无需付费订阅。</li>
-<li><strong>辅助资源</strong>：
-                    <ul>
-<li><strong>AI Fluency Vocabulary Guide</strong>：这是一份词汇指南，用通俗易懂的语言解释课程中遇到的关键术语，方便学习者随时查阅，无需刻意记忆。该指南也可以分享给Claude，以辅助理解特定概念 (提及于 <a href="https://www.anthropic.com/ai-fluency/introduction-to-ai-fluency" target="_blank">Introduction to AI Fluency</a>)。</li>
-<li><strong>总结性幻灯片/参考卡</strong>：例如，“Discernment”模块提供了该能力的总结性幻灯片（8.5x11和16x9两种尺寸），方便打印作为快速参考或在演示中使用 (<a href="https://www.anthropic.com/ai-fluency/discernment" target="_blank">Discernment Module</a>)；“Overview”模块也提供了类似框架总结材料 (<a href="https://www.anthropic.com/ai-fluency/overview" target="_blank">Overview</a>)。</li>
-</ul>
-</li>
-</ul>
-<h3>实践导向的教学方法</h3>
-<p>课程高度重视实践在学习过程中的作用，采用了多种方法促进学习者参与和技能转化：</p>
-<ul>
-<li><strong>互动练习 (Exercises)</strong>：
-                    <ul>
-<li><strong>直接互动</strong>：“Putting things into practice”部分明确指出，学习者将通过直接与语言模型（如Claude）互动来练习所学内容 (<a href="https://www.anthropic.com/ai-fluency/introduction-to-ai-fluency" target="_blank">Introduction to AI Fluency</a>)。</li>
-<li><strong>场景化思考</strong>：“The AI Fluency Framework (Overview)”模块中的“Apply the 4D’s”练习，要求学习者针对沟通、研究、创意等不同项目场景，思考如何应用4D框架中的各项能力 (<a href="https://www.anthropic.com/ai-fluency/overview" target="_blank">Overview</a>)。</li>
-<li><strong>探索式学习</strong>：同样在“Overview”模块中，“Explore something you love”和“Learn something new”练习鼓励学习者分别与Claude就自己熟悉和不熟悉的主题进行对话，体验不同情境下的AI互动，并观察AI的表现及自身感受。</li>
-<li><strong>专业领域应用</strong>：“Discernment”模块的“Expert Discernment”练习，则引导学习者在自己的专业领域内批判性评估AI的回答（详见第三部分辨别能力的阐述）。</li>
-</ul>
-</li>
-<li><strong>反思 (Reflection)</strong>：几乎每个模块结束后都设置了反思环节。通过引导性的问题，鼓励学习者将课程内容与自身已有的经验、遇到的挑战、对未来的期望以及潜在的应用场景联系起来，深化理解，促进知识内化。例如，在课程初期就会提问：“你在使用AI达成特定目标时遇到过哪些挑战？”“AI协作的哪些可能性最让你兴奋？”“你希望从这门课程中学到什么？” (<a href="https://www.anthropic.com/ai-fluency/introduction-to-ai-fluency" target="_blank">Introduction to AI Fluency</a>)。</li>
-<li><strong>视频教学</strong>：课程大量使用短视频（通常4-7分钟）来讲解核心概念，如AI素养的重要性、4D框架、生成式AI原理等，使得学习更生动直观。</li>
-</ul>
-<div class="chart-container">
-<canvas id="videoDurationChart"></canvas>
-</div>
-<script>
-                const ctxVideo = document.getElementById('videoDurationChart').getContext('2d');
-                new Chart(ctxVideo, {
-                    type: 'bar',
-                    data: {
-                        labels: [
-                            'Introduction to AI Fluency (Intro Module)',
-                            'Why do we need AI Fluency? (Overview Module)',
-                            'The 4D Framework (Overview Module)',
-                            'A Closer Look at Description (Description Module)',
-                            'A Closer Look at Discernment (Discernment Module)',
-                            'Generative AI fundamentals (Deep Dive 1 Module)',
-                            'Capabilities & limitations (Deep Dive 1 Module)'
-                        ],
-                        datasets: [{
-                            label: '视频时长 (分钟)',
-                            data: [4, 6, 5, 4, 5, 6, 7],
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.7)',
-                                'rgba(54, 162, 235, 0.7)',
-                                'rgba(255, 206, 86, 0.7)',
-                                'rgba(75, 192, 192, 0.7)',
-                                'rgba(153, 102, 255, 0.7)',
-                                'rgba(255, 159, 64, 0.7)',
-                                'rgba(99, 255, 132, 0.7)'
-                            ],
-                            borderColor: [
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(255, 159, 64, 1)',
-                                'rgba(99, 255, 132, 1)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                title: {
-                                    display: true,
-                                    text: '时长 (分钟)'
-                                }
-                            },
-                            x: {
-                                ticks: {
-                                     display: false // Hiding x-axis labels for brevity due to long titles
-                                }
-                            }
-                        },
-                        plugins: {
-                            title: {
-                                display: true,
-                                text: '课程关键视频资源时长概览',
-                                font: {
-                                    size: 16
-                                }
-                            },
-                            legend: {
-                                display: true,
-                                position: 'top',
-                            },
-                             tooltip: {
-                                callbacks: {
-                                    title: function(tooltipItems) {
-                                        // Return the full label for the tooltip title
-                                        return tooltipItems[0].label;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            </script>
-<h3>开放教育资源 (OER)</h3>
-<p>该课程的一个显著特点是其开放性。根据National Forum for the Enhancement of Teaching and Learning Ireland的文章 (<a href="https://www.teachingandlearning.ie/2025/05/28/supporting-ai-fluency-in-higher-education/" target="_blank">Supporting AI Fluency in Higher Education</a>) 及课程页面自身的版权信息 (<a href="https://www.anthropic.com/ai-fluency" target="_blank">Anthropic AI Fluency</a>)：</p>
-<ul>
-<li><strong>合作开发</strong>：本课程是Anthropic与学术界的合作成果，主要开发者包括Ringling College of Art and Design的Rick Dakan教授和University College Cork (爱尔兰科克大学商学院)的Joseph Feller教授。该合作项目部分得到了爱尔兰高等教育局 (HEA, Ireland) 通过国家教与学促进论坛 (National Forum for the Enhancement of Teaching and Learning) 的支持。<em data-skywork="text_badge" data-sk-source-text="该合作项目部分得到了爱尔兰高等教育局 (HEA,Ireland) 通过国家教与学促进论坛 (National Forum for the Enhancement of Teaching and Learning) 的支持。" id="skTag-MI8MXM" class="sk-source-tag" data-sk-source-id="MI8MXM" ></em></li>
-<li><strong>OER形式发布</strong>：课程将作为开放教育资源（OER）发布，采用<strong>CC BY-NC-SA 4.0</strong>（知识共享-署名-非商业性使用-相同方式共享 4.0）许可协议。这意味着全球的教育者和学习者都可以免费访问、使用、改编和分享这些宝贵的学习材料，只需遵循相应的许可条款。</li>
-<li><strong>发布平台</strong>：目前简版课程 "AI Fluency: Framework and Foundations" 已在Anthropic Academy（Anthropic的学习门户）上线，完整版课程预计于2025年秋季发布，届时将包含对4D能力更深入的探讨以及如何将AI素养思维整合到高等教育课程、教学法和评估中的内容。课程也将托管在OpenCourses.ie上。</li>
-</ul>
-<p>这种开放共享的模式极大地扩展了课程的潜在影响力和受益人群，体现了Anthropic在推动负责任AI发展方面的努力。</p>
-</section>
-<section id="conclusion">
-<h2>六、总结与展望：构建持久的AI协作能力</h2>
-<p>Anthropic推出的“AI Fluency: Framework &amp; Foundations”课程，不仅是对当前AI技术应用的一次及时回应，更是对未来人机协作模式的一次深刻思考和前瞻性构建。它超越了单纯的技能培训，致力于塑造一种全新的AI素养观。</p>
-<h3>课程核心价值回顾</h3>
-<p>本课程的核心价值在于，它系统性地引导学习者培养与AI进行<strong>有效（Effective）、高效（Efficient）、合乎道德（Ethical）、安全（Safe）</strong>的协作能力。通过深入学习和实践其核心的“4D框架”（委派、描述、辨别、勤勉），用户不再仅仅是被动地使用AI工具，而是能够主动地、批判性地、负责任地与AI进行互动和共同创造。这种能力体系旨在帮助用户建立一个超越短期操作技巧、能够灵活适应AI技术不断迭代的持久性AI协作思维模式和核心技能集。</p>
-<h3>学习者预期收获</h3>
-<p>完成本课程后，学习者有望在以下方面获得显著提升：</p>
-<ul>
-<li><strong>深思熟虑的交互框架</strong>：能够建立并运用一个结构化的框架来思考和管理人机交互过程。</li>
-<li><strong>明智的决策信心</strong>：在面对复杂任务时，能更有信心地判断何时、何地以及如何有效地引入AI进行协作，以达到最佳效果。</li>
-<li><strong>实用的协作技能</strong>：掌握与AI进行清晰沟通（描述）、批判性评估（辨别）、明智分工（委派）和负责任应用（勤勉）的实用技能。</li>
-<li><strong>负责任的评估与传播能力</strong>：能够以负责任的态度评估AI辅助工作的质量和潜在影响，并恰当地应用和传播相关成果。</li>
-</ul>
-<h3>Anthropic课程的独特性与前瞻性</h3>
-<p>此AI素养课程展现出以下几个方面的独特性和前瞻性思考：</p>
-<ul>
-<li><strong>理念先进</strong>：课程的核心理念从“工具使用”转向“人机协作”，强调人类在协作中的主导性、判断力和批判性思维，而非仅仅追求效率或自动化。</li>
-<li><strong>框架系统</strong>：“4D能力”框架为提升AI素养提供了一个全面、结构化且可操作的路径，使得复杂的AI协作问题得以分解和掌握。</li>
-<li><strong>伦理为先</strong>：课程将“合乎道德”和“安全”提升到与“有效”和“高效”同等重要的位置，贯穿于整个学习过程，培养学习者的责任感和风险意识。</li>
-<li><strong>面向未来</strong>：课程致力于培养的是一种能够适应AI技术不断演进的“元能力” (meta-skills)，使其在AI技术日新月异的背景下仍能保持相关性和指导性。</li>
-</ul>
-<p>正如课程开发者Rick Dakan教授和Joseph Feller教授在其研究中所强调的（引自 <a href="https://www.teachingandlearning.ie/2025/05/28/supporting-ai-fluency-in-higher-education/" target="_blank">Supporting AI Fluency in Higher Education</a>），新兴的AI能力和新颖的交互模式催生了对新知识、新技能、新洞察和新价值观的需求，AI素养框架正是为了应对这一需求而生。</p>
-<h3>对学习者的启示与行动建议</h3>
-<p>对于所有希望在AI时代保持竞争力并负责任地利用这一变革性技术的个体而言，Anthropic的AI素养课程提供了宝贵的启示：</p>
-<ul>
-<li><strong>积极拥抱学习</strong>：鼓励主动探索和学习此类AI素养课程，理解AI的潜力与局限，掌握与AI有效协作的方法论。</li>
-<li><strong>实践核心框架</strong>：在日常工作和学习中，有意识地运用“4D框架”来规划、执行和评估与AI的协作项目。</li>
-<li><strong>保持批判与反思</strong>：不盲从AI的输出，持续运用辨别能力，对AI生成的内容和建议进行审慎评估。</li>
-<li><strong>关注伦理与责任</strong>：时刻将伦理考量和安全意识置于AI应用的核心，确保技术的运用符合人类共同福祉。</li>
-<li><strong>持续迭代认知</strong>：AI技术及其社会影响在不断演变，保持开放心态，持续关注相关发展，不断学习和调整自己的AI协作策略。</li>
-</ul>
-<p>总而言之，Anthropic的AI素养课程不仅是一门知识课程，更是一种思维方式的引导。它旨在赋能个体成为AI时代中自信、明智且负责任的参与者和贡献者，共同塑造一个人机和谐共生的未来。</p>
-</section>
-<section id="appendix">
-<h2>七、附录：课程关键资源链接</h2>
-<p>以下列出了本报告在分析Anthropic AI素养课程时引用的主要课程页面、提及的重要视频资源（通常内嵌于相应模块页面中）以及其他相关参考资料。</p>
-<h3>主要课程链接 (Anthropic官方网站)</h3>
-<ul>
-<li><strong>Anthropic AI Fluency Course (总览)</strong>: <a href="https://www.anthropic.com/ai-fluency" target="_blank">https://www.anthropic.com/ai-fluency</a><em data-skywork="text_badge" data-sk-source-text="Anthropic AI Fluency Course (总览): https://www.anthropic.com/ai-fluency" id="skTag-778ETJ" class="sk-source-tag" data-sk-source-id="778ETJ" ></em></li>
-<li><strong>Introduction to AI Fluency (课程简介模块)</strong>: <a href="https://www.anthropic.com/ai-fluency/introduction-to-ai-fluency" target="_blank">https://www.anthropic.com/ai-fluency/introduction-to-ai-fluency</a><em data-skywork="text_badge" data-sk-source-text="Introduction to AI Fluency (课程简介模块): https://www.anthropic.com/ai-fluency/introduction-to-ai-fluency" id="skTag-778ETC" class="sk-source-tag" data-sk-source-id="778ETC" ></em></li>
-<li><strong>The AI Fluency Framework (Overview - 框架概览模块)</strong>: <a href="https://www.anthropic.com/ai-fluency/overview" target="_blank">https://www.anthropic.com/ai-fluency/overview</a><em data-skywork="text_badge" data-sk-source-text="The AI Fluency Framework (Overview - 框架概览模块): https://www.anthropic.com/ai-fluency/overview" id="skTag-6R5YBN" class="sk-source-tag" data-sk-source-id="6R5YBN" ></em></li>
-<li><strong>Deep Dive 1: What is Generative AI? (技术深潜模块)</strong>: <a href="https://www.anthropic.com/ai-fluency/deep-dive-1-what-is-generative-ai" target="_blank">https://www.anthropic.com/ai-fluency/deep-dive-1-what-is-generative-ai</a><em data-skywork="text_badge" data-sk-source-text="Deep Dive 1: What is Generative AI? (技术深潜模块): https://www.anthropic.com/ai-fluency/deep-dive-1-what-is-generative-ai" id="skTag-0U2N7L" class="sk-source-tag" data-sk-source-id="0U2N7L" ></em></li>
-<li><strong>Description (描述能力模块)</strong>: <a href="https://www.anthropic.com/ai-fluency/description" target="_blank">https://www.anthropic.com/ai-fluency/description</a></li>
-<li><strong>Discernment (辨别能力模块)</strong>: <a href="https://www.anthropic.com/ai-fluency/discernment" target="_blank">https://www.anthropic.com/ai-fluency/discernment</a></li>
-<li><strong>The Description-Discernment Loop (描述-辨别循环模块)</strong>: <a href="https://www.anthropic.com/ai-fluency/description-discernment-loop" target="_blank">https://www.anthropic.com/ai-fluency/description-discernment-loop</a></li>
-</ul>
-<p><em>注：课程中的“Delegation (委派)”和“Diligence (勤勉)”两个核心能力模块的详细页面链接在提供的参考资料中未能成功抓取具体内容，因此未在此列出其直接子页面链接。相关信息主要基于对框架整体性、其他模块内容以及辅助参考资料的综合分析。</em></p>
-<h3>提及的视频资源摘要 (内嵌于各模块页面中)</h3>
-<ul>
-<li><strong>Video: Introduction to AI Fluency</strong> (4分钟) - 位于 "Introduction to AI Fluency" 模块。</li>
-<li><strong>Video: Why do we need AI Fluency?</strong> (6分钟) - 位于 "The AI Fluency Framework (Overview)" 模块。</li>
-<li><strong>Video: The 4D Framework</strong> (5分钟) - 位于 "The AI Fluency Framework (Overview)" 模块。</li>
-<li><strong>Video: Generative AI fundamentals</strong> (6分钟) - 位于 "Deep Dive 1: What is Generative AI?" 模块。</li>
-<li><strong>Video: Capabilities &amp; limitations</strong> (7分钟) - 位于 "Deep Dive 1: What is Generative AI?" 模块。</li>
-<li><strong>Video: A Closer Look at Description</strong> (4分钟) - 位于 "Description" 模块。</li>
-<li><strong>Video: A Closer Look at Discernment</strong> (5分钟) - 位于 "Discernment" 模块。</li>
-</ul>
-<h3>其他参考资料</h3>
-<ul>
-<li><strong>AI Fluency vocabulary guide</strong>: 课程词汇指南，通常在课程页面（如 "Introduction to AI Fluency" 模块的 "Lesson resources" 部分）提供。</li>
-<li><strong>Supporting AI Fluency in Higher Education (National Forum for the Enhancement of Teaching and Learning, Ireland)</strong>: <a href="https://www.teachingandlearning.ie/2025/05/28/supporting-ai-fluency-in-higher-education/" target="_blank">https://www.teachingandlearning.ie/2025/05/28/supporting-ai-fluency-in-higher-education/</a> (发布日期: 2025-05-28)</li>
-<li><strong>Teaching AI to Teenagers: Why the Framework for AI Fluency Just Works (AI Advisory Boards Blog)</strong>: <a href="https://aiadvisoryboards.wordpress.com/2025/05/29/teaching-ai-to-teenagers-why-the-framework-for-ai-fluency-just-works/" target="_blank">https://aiadvisoryboards.wordpress.com/2025/05/29/teaching-ai-to-teenagers-why-the-framework-for-ai-fluency-just-works/</a> (发布日期: 2025-05-29)</li>
-</ul>
-<p>这些资源共同构成了理解Anthropic AI素养课程内容及其背后理念的基础。</p>
-</section>
-<div class="report-by">
-<p>学术型HTML内容架构专家 分析报告</p>
-</div>
-</div>
+                            <li>理解在何种情况下、出于何种原因以及采用何种方式将特定任务委派给AI是合理的</li>
+                            <li>培养评估不同AI工具在特定任务上的适用性、优势与局限性的能力</li>
+                            <li>学会在具体任务中，如何恰当平衡人类与AI的角色和职责分配，以达到最佳协同效能</li>
+                            <li>认知到委派决策对后续协作效率、成果质量及潜在风险的影响</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skills-list">
+                        <h4>关键考量因素：</h4>
+                        <ul>
+                            <li><strong>任务性质：</strong>任务的复杂性、创造性要求、重复性程度、对精确性的要求等</li>
+                            <li><strong>能力匹配：</strong>个人或团队的既有技能与AI在该任务上的能力是否匹配，能否形成互补</li>
+                            <li><strong>成果预期：</strong>对任务成果的质量标准、创新性要求、以及完成时限</li>
+                            <li><strong>效益与成本：</strong>使用AI可能带来的时间节省、成本降低或价值提升的权衡</li>
+                            <li><strong>风险评估：</strong>AI处理任务可能存在的偏见、错误、安全漏洞或伦理问题</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Description Section -->
+    <section id="description" class="section">
+        <div class="container">
+            <div class="content-section">
+                <div class="content-card">
+                    <h2 class="content-title">
+                        <i class="fas fa-comment-dots"></i> 描述 (Description)
+                    </h2>
+                    
+                    <div class="image-grid">
+                        <div class="image-card">
+                            <img src="./core_concepts/description.png" alt="描述概念（英文版）">
+
+                        </div>
+                        <div class="image-card">
+                            <img src="./core_concepts/description-cn.png" alt="描述概念（中文版）">
+
+                        </div>
+                    </div>
+                    
+                    <p>描述是实现有效人机协作的关键沟通环节。它不仅指编写有效的提示词（prompts），更是一门与AI系统进行清晰、有目的沟通的艺术，旨在创造一个人类与AI能够高效协同工作的环境。</p>
+                    
+                    <div class="highlight-box">
+                        <p><strong>AI无法读取用户的思想，因此，人机协作成果的质量在很大程度上取决于用户能否清晰、全面地阐述其需求、偏好的处理方式以及期望的互动风格。</strong></p>
+                    </div>
+                    
+                    <div class="skills-list">
+                        <h4>我们需要：</h4>
+                        <ul>
+                            <li>理解如何有效地向AI系统传达自己的意图和需求</li>
+                            <li>认识到在人机协作中，清晰、有目的的沟通至关重要</li>
+                            <li>发展在三个关键层面的描述技能：产品描述、过程描述和性能描述</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skills-list">
+                        <h4>核心技能：</h4>
+                        <ul>
+                            <li><strong>清晰表达：</strong>用明确无歧义的语言阐述需求</li>
+                            <li><strong>结构化指令：</strong>将复杂任务分解为更小、更易于AI理解的步骤</li>
+                            <li><strong>提供上下文：</strong>给予AI足够的背景信息，帮助其更好地把握任务的核心</li>
+                            <li><strong>迭代优化：</strong>根据AI的初步反馈，不断调整和完善描述，直至达到预期效果</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Prompt Engineering Subsection -->
+                    <div class="prompt-engineering">
+                        <h4><i class="fas fa-cogs"></i> 提示词工程 (Prompt Engineering)</h4>
+                        
+                        <div class="image-grid">
+                            <div class="image-card">
+                                <img src="./core_concepts/prompt_engineering.png" alt="提示词工程（英文版）">
+
+                            </div>
+                            <div class="image-card">
+                                <img src="./core_concepts/prompt_engineering2.png" alt="提示词工程技巧（英文版）">
+
+                            </div>
+                        </div>
+                        
+                        <div class="image-grid">
+                            <div class="image-card">
+                                <img src="./core_concepts/prompt_engineering-cn.png" alt="提示词工程（中文版）">
+
+                            </div>
+                            <div class="image-card">
+                                <img src="./core_concepts/prompt_engineering2-cn.png" alt="提示词工程技巧（中文版）">
+
+                            </div>
+                        </div>
+                        
+                        <h4>6个有效提示词工程技巧：</h4>
+                        <ul>
+                            <li>提供上下文</li>
+                            <li>展示"好"的样例</li>
+                            <li>指定输出约束</li>
+                            <li>分解复杂任务</li>
+                            <li>使用系统提示</li>
+                            <li>迭代和优化</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Discernment Section -->
+    <section id="discernment" class="section">
+        <div class="container">
+            <div class="content-section">
+                <div class="content-card">
+                    <h2 class="content-title">
+                        <i class="fas fa-search"></i> 辨别 (Discernment)
+                    </h2>
+                    
+                    <div class="image-grid">
+                        <div class="image-card">
+                            <img src="./core_concepts/discernment.png" alt="辨别概念（英文版）">
+
+                        </div>
+                        <div class="image-card">
+                            <img src="./core_concepts/discernment-cn.png" alt="辨别概念（中文版）">
+
+                        </div>
+                    </div>
+                    
+                    <p>辨别是AI素养中与"描述"相辅相成的关键能力，它指的是用户审慎、批判性地评估AI所生成的输出内容、其达成输出所采用的过程以及在互动中的行为表现。如果说"描述"是向AI有效输入，那么"辨别"就是对AI的输出进行有效把关。</p>
+                    
+                    <div class="skills-list">
+                        <h4>我们需要：</h4>
+                        <ul>
+                            <li>理解如何以深思熟虑的方式评估AI的输出和执行过程</li>
+                            <li>发展在与AI互动过程中所需的批判性思维技能</li>
+                            <li>学习识别并有效处理在AI互动中可能出现的质量问题</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skills-list">
+                        <h4>"辨别"能力的三个层面：</h4>
+                        <ul>
+                            <li><strong>产品辨别：</strong>关注对AI实际输出成果的质量评估，包括准确性、适当性、连贯性和相关性</li>
+                            <li><strong>过程辨别：</strong>评估AI是如何达成其输出结果的，审视逻辑错误、注意力偏差等问题</li>
+                            <li><strong>性能辨别：</strong>评估AI在与用户协作过程中的行为表现本身</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skills-list">
+                        <h4>核心技能：</h4>
+                        <ul>
+                            <li><strong>事实核查：</strong>验证AI提供信息的准确性，尤其对于关键数据和论断</li>
+                            <li><strong>逻辑分析：</strong>审视AI的推理过程是否合理，是否存在逻辑谬误</li>
+                            <li><strong>识别偏见：</strong>警惕AI输出中可能存在的来自训练数据或算法本身的偏见</li>
+                            <li><strong>评估创造性与原创性：</strong>对于创意类任务，判断AI生成内容的独特性和价值</li>
+                            <li><strong>理解局限性：</strong>认识到AI当前的技术边界，不盲从其所有输出</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <p><strong>即使是最先进的人工智能系统，也离不开人类的判断和监督。辨别能力与描述能力在一个人机协作的持续反馈循环中紧密配合，共同提升协作质量。</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Diligence Section -->
+    <section id="diligence" class="section">
+        <div class="container">
+            <div class="content-section">
+                <div class="content-card">
+                    <h2 class="content-title">
+                        <i class="fas fa-shield-alt"></i> 尽职 (Diligence)
+                    </h2>
+                    
+                    <div class="image-grid">
+                        <div class="image-card">
+                            <img src="./core_concepts/diligence.png" alt="尽职概念（英文版）">
+
+                        </div>
+                        <div class="image-card">
+                            <img src="./core_concepts/diligence-cn.png" alt="尽职概念（中文版）">
+
+                        </div>
+                    </div>
+                    
+                    <p>尽职是"4D"框架中至关重要的一环，它关注的是在人机协作全过程中确保负责任性、透明度和问责制，尤其强调AI应用的伦理考量和安全保障。它要求用户对AI辅助生成或共同创造的内容和决策承担最终责任。</p>
+                    
+                    <div class="highlight-box">
+                        <p><strong>尽职的核心是"承担所有权，保持透明，并确保AI生成的工作合乎道德、准确且适当"</strong></p>
+                    </div>
+                    
+                    <div class="skills-list">
+                        <h4>我们需要：</h4>
+                        <ul>
+                            <li>深刻理解在AI协作中人类承担最终责任的必要性和重要性</li>
+                            <li>学习如何系统性地检查和确保AI生成内容的准确性、合乎道德以及场景适宜性</li>
+                            <li>培养识别和认知AI应用相关潜在风险的能力，并主动采取规避或缓解措施</li>
+                            <li>掌握在工作中适当声明AI使用情况（透明度）的方法和原则</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skills-list">
+                        <h4>关键实践：</h4>
+                        <ul>
+                            <li><strong>透明度：</strong>在适当的时候清晰声明AI在工作成果中的参与程度和扮演角色</li>
+                            <li><strong>问责制：</strong>人类用户对最终输出的成果负有最终审查和确认的责任</li>
+                            <li><strong>数据隐私与安全：</strong>在使用AI处理敏感数据时，严格遵守数据保护法规和伦理准则</li>
+                            <li><strong>避免有害应用：</strong>警惕并主动避免将AI技术用于可能造成社会危害的场景</li>
+                            <li><strong>持续学习与适应：</strong>保持学习心态，持续更新知识，适应新的挑战</li>
+                            <li><strong>人类监督与干预：</strong>在AI决策或执行流程中设置必要的人类监督节点</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <p><strong>尽职的核心是将人类的核心价值观和严谨的道德考量置于AI设计、开发、部署和应用的全过程，确保技术的发展服务于人类福祉，而非带来潜在风险或损害。</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://www.anthropic.com/ai-fluency" class="footer-link" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Anthropic AI素养课程
+                </a>
+                基于Anthropic官方课程内容整理制作
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close" id="modalClose">&times;</span>
+        <img class="modal-content" id="modalImage" src="" alt="">
+    </div>
+    
+    <script>
+        // Theme Management
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        const html = document.documentElement;
+        
+        // Initialize theme
+        const savedTheme = localStorage.getItem('theme') || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                html.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fas fa-sun';
+                themeText.textContent = '浅色模式';
+            } else {
+                html.removeAttribute('data-theme');
+                themeIcon.className = 'fas fa-moon';
+                themeText.textContent = '深色模式';
+            }
+            localStorage.setItem('theme', theme);
+        }
+        
+        setTheme(savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+        });
+        
+        // Scroll Progress
+        const scrollProgress = document.getElementById('scrollProgress');
+        
+        function updateScrollProgress() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+        }
+        
+        window.addEventListener('scroll', updateScrollProgress);
+        
+        // Navigation
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('section[id]');
+        
+        function updateActiveNav() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-section') === current) {
+                    item.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', updateActiveNav);
+        
+        // Smooth scrolling for navigation
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = item.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Image Modal
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const modalClose = document.getElementById('modalClose');
+        const images = document.querySelectorAll('.image-card img');
+        
+        images.forEach(img => {
+            img.addEventListener('click', () => {
+                modal.classList.add('active');
+                modalImg.src = img.src;
+                modalImg.alt = img.alt;
+            });
+        });
+        
+
+        
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+        
+        modalClose.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+        
+
+        
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const animationObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in-up');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe elements for animation
+        document.querySelectorAll('.framework-card, .content-card, .image-card').forEach(el => {
+            animationObserver.observe(el);
+        });
+        
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateScrollProgress();
+            updateActiveNav();
+        });
+    </script>
 </body>
 </html>

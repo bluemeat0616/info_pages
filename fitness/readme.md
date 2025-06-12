@@ -8,6 +8,8 @@
 
 ## prompt
 
-> 生成一个网页帮我计算时间，用于实现hiit训练，默认冲刺运动25秒，休息10秒，往复10次。点击开始前可调整默认值，点击开始后帮我记时。
+> [生成一个网页帮我计算时间，用于实现hiit训练，默认冲刺运动25秒，休息10秒，往复10次。点击开始前可调整默认值，点击开始后帮我记时。]()
 
-<img src="./assets/image-20250611210318954.png" alt="image-20250611210318954" style="zoom: 30%;" /><img src="./assets/image-20250611211233404.png" alt="image-20250611211233404" style="zoom: 33%;" />
+<img src="./hiit/img/run.png" alt="image-20250611210318954" style="zoom: 30%;" /><img src="./hiit/img/result.png" alt="image-20250611211233404" style="zoom: 33%;" />
+
+网页链接：https://bluemeat0616.github.io/info_pages/fitness/hiit

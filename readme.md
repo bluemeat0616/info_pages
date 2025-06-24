@@ -10,6 +10,9 @@
 
 - [天工总结报告](https://bluemeat0616.github.io/info_pages/study/ai_fluency)
 - [Core Concepts](https://bluemeat0616.github.io/info_pages/study/ai_fluency/core_concepts)
+- [AI素养课程核心概念](https://bluemeat0616.github.io/info_pages/study/ai_fluency)
+- [AI能力层级：模型能力与工具能力区分指南](https://bluemeat0616.github.io/info_pages/sia/ai_capability_level/)
+- [大模型项目开发技术栈推荐](https://bluemeat0616.github.io/info_pages/sia/tech_stack/)
 
 # 网页风格
 

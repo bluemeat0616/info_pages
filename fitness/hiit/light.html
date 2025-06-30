@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIIT训练计时器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Rounded MT Bold', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+            overflow: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 150, 136, 0.2);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 150, 136, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #00796b;
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #00897b;
+        }
+        
+        .settings {
+            background: rgba(178, 235, 242, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 150, 136, 0.1);
+        }
+        
+        .setting-group {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            align-items: center;
+        }
+        
+        label {
+            font-size: 1.1rem;
+            color: #00796b;
+            flex: 1;
+            text-align: left;
+        }
+        
+        input {
+            width: 100px;
+            padding: 12px 15px;
+            border: 2px solid #4db6ac;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            color: #00695c;
+            font-size: 1.2rem;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus {
+            border-color: #00796b;
+            box-shadow: 0 0 0 3px rgba(0, 150, 136, 0.2);
+        }
+        
+        .timer-display {
+            position: relative;
+            height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .phase-display {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .phase-sprint {
+            color: #e53935;
+        }
+        
+        .phase-rest {
+            color: #1e88e5;
+        }
+        
+        .time-display {
+            font-size: 5rem;
+            font-weight: bold;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .cycle-display {
+            font-size: 1.3rem;
+            margin-top: 10px;
+            color: #00897b;
+            font-weight: bold;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        #startBtn {
+            background: linear-gradient(to right, #26a69a, #4db6ac);
+            color: white;
+        }
+        
+        #pauseBtn {
+            background: linear-gradient(to right, #ffa726, #fb8c00);
+            color: white;
+            display: none;
+        }
+        
+        #resetBtn {
+            background: linear-gradient(to right, #42a5f5, #1e88e5);
+            color: white;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: rgba(0, 150, 136, 0.1);
+            border-radius: 5px;
+            margin: 30px 0 20px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #26a69a, #4db6ac);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .completed {
+            font-size: 1.2rem;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(76, 175, 80, 0.2);
+            border-radius: 10px;
+            color: #2e7d32;
+            font-weight: bold;
+            display: none;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+        
+        @media (max-width: 500px) {
+            .container {
+                padding: 20px;
+                border-radius: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .time-display {
+                font-size: 4rem;
+            }
+            
+            .phase-display {
+                font-size: 1.8rem;
+            }
+            
+            .setting-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            label {
+                margin-bottom: 8px;
+            }
+            
+            input {
+                width: 100%;
+            }
+            
+            button {
+                padding: 12px 20px;
+                min-width: 100px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HIIT训练计时器</h1>
+        <p class="subtitle">高强度间歇训练 - 燃烧脂肪，提升耐力</p>
+        
+        <div class="settings">
+            <div class="setting-group">
+                <label for="sprintTime">冲刺时间 (秒):</label>
+                <input type="number" id="sprintTime" min="5" max="300" value="50">
+            </div>
+            <div class="setting-group">
+                <label for="restTime">休息时间 (秒):</label>
+                <input type="number" id="restTime" min="5" max="300" value="30">
+            </div>
+            <div class="setting-group">
+                <label for="cycles">循环次数:</label>
+                <input type="number" id="cycles" min="1" max="50" value="10">
+            </div>
+        </div>
+        
+        <div class="timer-display">
+            <div class="phase-display" id="phaseDisplay">准备开始</div>
+            <div class="time-display" id="timeDisplay">00:00</div>
+            <div class="cycle-display" id="cycleDisplay">0/10 轮</div>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
+        <div class="controls">
+            <button id="startBtn">开始训练</button>
+            <button id="pauseBtn">暂停</button>
+            <button id="resetBtn">重置</button>
+        </div>
+        
+        <div class="completed" id="completedMessage">训练完成！太棒了！</div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取DOM元素
+            const sprintTimeInput = document.getElementById('sprintTime');
+            const restTimeInput = document.getElementById('restTime');
+            const cyclesInput = document.getElementById('cycles');
+            const timeDisplay = document.getElementById('timeDisplay');
+            const phaseDisplay = document.getElementById('phaseDisplay');
+            const cycleDisplay = document.getElementById('cycleDisplay');
+            const startBtn = document.getElementById('startBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const progressBar = document.getElementById('progressBar');
+            const completedMessage = document.getElementById('completedMessage');
+            
+            // 训练状态变量
+            let isRunning = false;
+            let isPaused = false;
+            let timer;
+            let currentPhase = 'sprint'; // 'sprint' 或 'rest'
+            let currentTime = 0;
+            let currentCycle = 0;
+            let totalCycles = 0;
+            let sprintTime = 50;
+            let restTime = 30;
+            
+            // 更新显示
+            function updateDisplay() {
+                // 更新倒计时显示
+                const minutes = Math.floor(currentTime / 60);
+                const seconds = currentTime % 60;
+                timeDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // 更新阶段显示
+                if (currentPhase === 'sprint') {
+                    phaseDisplay.textContent = '冲刺！';
+                    phaseDisplay.className = 'phase-display phase-sprint';
+                    timeDisplay.style.color = '#e53935';
+                } else {
+                    phaseDisplay.textContent = '休息';
+                    phaseDisplay.className = 'phase-display phase-rest';
+                    timeDisplay.style.color = '#1e88e5';
+                }
+                
+                // 更新循环显示
+                cycleDisplay.textContent = `${currentCycle}/${totalCycles} 轮`;
+                
+                // 更新进度条
+                let maxTime = currentPhase === 'sprint' ? sprintTime : restTime;
+                let progress = ((maxTime - currentTime) / maxTime) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+            
+            // 开始训练
+            function startTraining() {
+                if (isRunning && !isPaused) return;
+                
+                completedMessage.style.display = 'none';
+                
+                if (!isRunning) {
+                    // 第一次开始
+                    sprintTime = parseInt(sprintTimeInput.value);
+                    restTime = parseInt(restTimeInput.value);
+                    totalCycles = parseInt(cyclesInput.value);
+                    currentCycle = 1;
+                    currentPhase = 'sprint';
+                    currentTime = sprintTime;
+                    isRunning = true;
+                    startBtn.textContent = '继续';
+                    pauseBtn.style.display = 'inline-block';
+                } else if (isPaused) {
+                    // 从暂停状态恢复
+                    isPaused = false;
+                    pauseBtn.textContent = '暂停';
+                }
+                
+                // 禁用输入
+                sprintTimeInput.disabled = true;
+                restTimeInput.disabled = true;
+                cyclesInput.disabled = true;
+                
+                // 开始计时器
+                timer = setInterval(function() {
+                    if (!isPaused) {
+                        currentTime--;
+                        
+                        if (currentTime <= 0) {
+                            // 当前阶段结束
+                            if (currentPhase === 'sprint') {
+                                // 切换到休息阶段
+                                currentPhase = 'rest';
+                                currentTime = restTime;
+                            } else {
+                                // 休息结束，切换到冲刺或结束
+                                currentCycle++;
+                                if (currentCycle > totalCycles) {
+                                    // 训练完成
+                                    clearInterval(timer);
+                                    isRunning = false;
+                                    completedMessage.style.display = 'block';
+                                    startBtn.textContent = '开始训练';
+                                    pauseBtn.style.display = 'none';
+                                    
+                                    // 启用输入
+                                    sprintTimeInput.disabled = false;
+                                    restTimeInput.disabled = false;
+                                    cyclesInput.disabled = false;
+                                    return;
+                                }
+                                currentPhase = 'sprint';
+                                currentTime = sprintTime;
+                            }
+                        }
+                        
+                        updateDisplay();
+                    }
+                }, 1000);
+                
+                updateDisplay();
+            }
+            
+            // 暂停训练
+            function pauseTraining() {
+                isPaused = !isPaused;
+                pauseBtn.textContent = isPaused ? '继续' : '暂停';
+            }
+            
+            // 重置训练
+            function resetTraining() {
+                clearInterval(timer);
+                isRunning = false;
+                isPaused = false;
+                currentTime = 0;
+                currentCycle = 0;
+                
+                // 重置显示
+                timeDisplay.textContent = '00:00';
+                phaseDisplay.textContent = '准备开始';
+                phaseDisplay.className = 'phase-display';
+                timeDisplay.style.color = '#333';
+                cycleDisplay.textContent = '0/10 轮';
+                progressBar.style.width = '0%';
+                completedMessage.style.display = 'none';
+                
+                startBtn.textContent = '开始训练';
+                pauseBtn.style.display = 'none';
+                
+                // 启用输入
+                sprintTimeInput.disabled = false;
+                restTimeInput.disabled = false;
+                cyclesInput.disabled = false;
+            }
+            
+            // 事件监听
+            startBtn.addEventListener('click', startTraining);
+            pauseBtn.addEventListener('click', pauseTraining);
+            resetBtn.addEventListener('click', resetTraining);
+            
+            // 输入验证
+            [sprintTimeInput, restTimeInput, cyclesInput].forEach(input => {
+                input.addEventListener('change', function() {
+                    let value = parseInt(this.value);
+                    const min = parseInt(this.min);
+                    const max = parseInt(this.max);
+                    
+                    if (value < min) this.value = min;
+                    if (value > max) this.value = max;
+                });
+            });
+            
+            // 初始化显示
+            updateDisplay();
+        });
+    </script>
+</body>
+</html>

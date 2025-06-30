@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生成式人工智能是分析和机器学习的最新发展</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-purple: #8B5CF6;
+            --light-purple: #F3E8FF;
+            --dark-purple: #5B21B6;
+            --accent-blue: #3B82F6;
+            --light-blue: #EBF8FF;
+            --dark-blue: #1E40AF;
+            --text-dark: #1F2937;
+            --text-light: #6B7280;
+            --white: #FFFFFF;
+            --light-gray: #F9FAFB;
+            --border-radius: 16px;
+            --shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', 'Roboto', sans-serif;
+            background: #f5f5f5;
+            color: var(--text-dark);
+            line-height: 1.6;
+            width: 1450px;
+            height: 900px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 40px;
+        }
+        
+        /* Integrated Title */
+        .main-title-overlay {
+            position: absolute;
+            top: 25px;
+            left: 40px;
+            z-index: 3;
+            max-width: calc(100% - 80px);
+        }
+        
+        .integrated-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            text-align: left;
+            margin: 0;
+            line-height: 1.2;
+        }
+        
+        /* Evolution Flow */
+        .evolution-flow {
+            position: relative;
+            height: 220px;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, var(--primary-purple) 0%, var(--accent-blue) 100%);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        
+        .flow-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 200"><path d="M0,100 Q450,50 900,100 T1800,100" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="3"/></svg>');
+            background-size: cover;
+        }
+        
+        .evolution-stages {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+            padding: 120px 80px 0 80px;
+            z-index: 2;
+        }
+        
+        .stage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+        }
+        
+        .stage-circle {
+            width: 120px;
+            height: 120px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .stage-circle:hover {
+            transform: scale(1.1);
+        }
+        
+        .stage-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--dark-purple);
+        }
+        
+        .stage-label {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+        
+        .stage-sublabel {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        /* Main Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            height: 420px;
+            align-items: start;
+        }
+        
+        .content-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            background: var(--text-dark);
+            color: white;
+            padding: 12px 16px;
+            margin: -18px -18px 15px -18px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .card-content {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .card-highlight {
+            background: linear-gradient(135deg, var(--light-purple), var(--light-blue));
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+            border-left: 4px solid var(--primary-purple);
+            font-size: 0.7rem;
+        }
+        
+        /* Decorative Elements */
+        .decoration {
+            position: absolute;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        .decoration-1 {
+            top: 20px;
+            right: 20px;
+            font-size: 8rem;
+            color: var(--primary-purple);
+        }
+        
+        .decoration-2 {
+            bottom: 20px;
+            left: 20px;
+            font-size: 6rem;
+            color: var(--accent-blue);
+        }
+        
+        /* Responsive adjustments for fixed size */
+        @media (max-width: 1800px) {
+            body {
+                transform: scale(0.8);
+                transform-origin: top left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Evolution Flow with Integrated Title -->
+        <div class="evolution-flow">
+            <div class="flow-background"></div>
+            <div class="main-title-overlay">
+                <h1 class="integrated-title">生成式人工智能是分析和机器学习的最新发展</h1>
+            </div>
+            <div class="evolution-stages">
+                <div class="stage">
+                    <div class="stage-circle">
+                        <span class="stage-text">描述性</span>
+                    </div>
+                </div>
+                <div class="stage">
+                    <div class="stage-circle">
+                        <span class="stage-text">诊断性</span>
+                    </div>
+                </div>
+                <div class="stage">
+                    <div class="stage-circle">
+                        <span class="stage-text">预测性</span>
+                    </div>
+                </div>
+                <div class="stage">
+                    <div class="stage-circle">
+                        <span class="stage-text">预见性</span>
+                    </div>
+                </div>
+                <div class="stage">
+                    <div class="stage-circle">
+                        <span class="stage-text">生成性</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content Grid -->
+        <div class="content-grid">
+            <!-- 传统分析时代 (1950s-1990s) -->
+            <div class="content-card">
+                <div class="card-header">传统分析时代 (1950s-1980s)</div>
+                <div class="card-content">
+                    基于统计学和数学模型的数据分析，依赖人工设定规则和假设，计算能力受限。
+                    <div class="card-highlight">
+                        <i class="fas fa-chart-line"></i> 描述性统计 · 回归分析 · 时间序列分析
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 数据科学兴起 (2000s-2010s) -->
+            <div class="content-card">
+                <div class="card-header">数据科学兴起 (1990s-2010s)</div>
+                <div class="card-content">
+                    数据库技术和计算能力提升推动跨学科实践，统计学、计算机科学与领域知识结合，形成数据科学框架。
+                    <div class="card-highlight">
+                        <i class="fas fa-flask"></i> 数据仓库 · 关联规则挖掘 · 预测建模
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 机器学习革命 (2010s-2020s) -->
+            <div class="content-card">
+                <div class="card-header">机器学习革命 (2000s-2020s)</div>
+                <div class="card-content">
+                    算法自动化学习成为主流，算力和大数据推动深度学习突破，尤其在感知任务上。
+                    <div class="card-highlight">
+                        <i class="fas fa-robot"></i> 神经网络 · 深度学习（CNN/RNN） · 强化学习（AlphaGo, 2016）
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 生成式AI新纪元 (2022年至今) -->
+            <div class="content-card">
+                <div class="card-header">生成式AI新纪元 (2020年至今)</div>
+                <div class="card-content">
+                    Transformer架构和超大模型催生生成式AI爆发，实现跨模态内容创造。
+                    <div class="card-highlight">
+                        <i class="fas fa-magic"></i>GPT-3（2020） · Stable Diffusion（2022） · ChatGPT（2022）
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Decorative Elements -->
+    <div class="decoration decoration-1">
+        <i class="fas fa-brain"></i>
+    </div>
+    <div class="decoration decoration-2">
+        <i class="fas fa-cogs"></i>
+    </div>
+    
+    <script>
+        // Add subtle animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.content-card');
+            const stages = document.querySelectorAll('.stage-circle');
+            
+            // Stagger card animations
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 200 + 500);
+            });
+            
+            // Stage circle hover effects
+            stages.forEach(stage => {
+                stage.addEventListener('mouseenter', function() {
+                    this.style.background = 'linear-gradient(135deg, #8B5CF6, #3B82F6)';
+                    this.querySelector('.stage-text').style.color = 'white';
+                });
+                
+                stage.addEventListener('mouseleave', function() {
+                    this.style.background = 'rgba(255,255,255,0.9)';
+                    this.querySelector('.stage-text').style.color = 'var(--dark-purple)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
